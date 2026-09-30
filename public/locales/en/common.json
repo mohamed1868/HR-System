@@ -1,0 +1,35 @@
+{
+  "app": {
+    "name": "HR System"
+  },
+  "nav": {
+    "collapse": "Collapse sidebar",
+    "dashboard": "Dashboard",
+    "employees": "Employees",
+    "attendance": "Attendance",
+    "payroll": "Payroll",
+    "requests": "Requests",
+    "payslips": "Payslips",
+    "profile": "Profile"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "language": {
+    "toggle": "Change language",
+    "en": "English",
+    "ar": "العربية"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "description": "An unexpected error occurred. You can try again or go back home.",
+    "retry": "Try again",
+    "home": "Go home"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for doesn't exist.",
+    "home": "Back home"
+  }
+}
