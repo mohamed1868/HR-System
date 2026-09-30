@@ -3,6 +3,7 @@ import {
   FileText,
   LayoutDashboard,
   Receipt,
+  UserPlus,
   UserRound,
   Users,
   Wallet,
@@ -18,6 +19,7 @@ export interface NavItem {
 export const adminNav: NavItem[] = [
   { titleKey: "nav.dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
   { titleKey: "nav.employees", href: "/admin/employees", icon: Users },
+  { titleKey: "nav.addUser", href: "/admin/add-user", icon: UserPlus },
   { titleKey: "nav.attendance", href: "/admin/attendance", icon: CalendarCheck },
   { titleKey: "nav.payroll", href: "/admin/payroll", icon: Wallet },
 ];

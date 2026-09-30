@@ -1,0 +1,53 @@
+{
+  "app": {
+    "name": "HR System"
+  },
+  "nav": {
+    "collapse": "Collapse sidebar",
+    "dashboard": "Dashboard",
+    "employees": "Employees",
+    "attendance": "Attendance",
+    "payroll": "Payroll",
+    "requests": "Requests",
+    "payslips": "Payslips",
+    "profile": "Profile",
+    "addUser": "Add User"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "language": {
+    "toggle": "Change language",
+    "en": "English",
+    "ar": "العربية"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "description": "An unexpected error occurred. You can try again or go back home.",
+    "retry": "Try again",
+    "home": "Go home"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for doesn't exist.",
+    "home": "Back home"
+  },
+  "auth": {
+    "title": "Login first to your account",
+    "email": "Email Address",
+    "emailPlaceholder": "you@company.com",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "showPassword": "Show password",
+    "login": "Login",
+    "emailRequired": "Please enter your email address",
+    "emailInvalid": "Please enter a valid email address",
+    "passwordRequired": "Please enter your password",
+    "heroTitle": "Amazing Platform!",
+    "heroQuote": "\"The human resource platform helped streamline our hiring process and saved us a significant amount of time and effort.\"",
+    "rights": "All rights reserved.",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy"
+  }
+}

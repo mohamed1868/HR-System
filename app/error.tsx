@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { AlertTriangle, Home, RotateCcw } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,7 +14,7 @@ interface IErrorPage {
 }
 
 const ErrorPage = ({ error, retry }: IErrorPage) => {
-  const { t } = useTranslation();
+  const t = useTranslations();
 
   useEffect(() => {
     console.error(error);

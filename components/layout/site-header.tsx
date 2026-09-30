@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ChevronDown } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { LanguageToggle } from "./language-toggle";
 
 export const SiteHeader = () => {
-  const { t } = useTranslation();
+  const t = useTranslations();
 
   return (
     <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-3 border-b bg-sidebar px-4 md:px-6">

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { useLocale, useTranslations } from "next-intl";
 
 import {
   Sidebar,
@@ -25,10 +25,11 @@ import { ThemeToggle } from "./theme-toggle";
 export const AppSidebar = () => {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
-  const { t, i18n } = useTranslation();
+  const t = useTranslations();
+  const locale = useLocale();
   const { state, toggleSidebar } = useSidebar();
   const items = [...(isAdmin ? adminNav : userNav), ...accountNav];
-  const isRtl = i18n.dir() === "rtl";
+  const isRtl = locale === "ar";
   const CollapseIcon = (state === "collapsed") !== isRtl ? ChevronsRight : ChevronsLeft;
 
   return (

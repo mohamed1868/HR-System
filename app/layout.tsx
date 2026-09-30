@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Lexend } from "next/font/google";
-import { I18nProvider } from "@/components/i18n-provider";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale } from "next-intl/server";
+
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
@@ -20,18 +22,21 @@ export const metadata: Metadata = {
   description: "Manage employees, attendance, payroll and requests.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const locale = await getLocale();
+
   return (
     <html
-      lang="en"
+      lang={locale}
+      dir={locale === "ar" ? "rtl" : "ltr"}
       className={`${lexend.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <I18nProvider>
+          <NextIntlClientProvider>
             <TooltipProvider>{children}</TooltipProvider>
-          </I18nProvider>
+          </NextIntlClientProvider>
         </ThemeProvider>
       </body>
     </html>

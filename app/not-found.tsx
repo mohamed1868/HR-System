@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 
-import { useTranslation } from "react-i18next";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 
 const NotFound = () => {
-  const { t } = useTranslation();
+  const t = useTranslations();
 
   return (
     <main className="flex flex-1 flex-col items-center justify-center gap-4 p-6 text-center">
