@@ -5,6 +5,7 @@ import { getLocale } from "next-intl/server";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 const lexend = Lexend({
@@ -36,6 +37,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <NextIntlClientProvider>
             <TooltipProvider>{children}</TooltipProvider>
+            <Toaster />
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

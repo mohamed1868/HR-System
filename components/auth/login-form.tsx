@@ -13,6 +13,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { loginSchema, type LoginInput } from "@/lib/validations/auth";
+import { axiosInstance } from "@/lib/axios";
+import { User } from "@/lib/generated/prisma/client";
+import { toast } from "sonner";
 
 type LoginErrors = Partial<Record<keyof LoginInput, string[]>>;
 
@@ -21,22 +24,42 @@ export const LoginForm = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<LoginErrors>({});
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const email = event.currentTarget.email.value;
+    const password = event.currentTarget.password.value;
     const result = loginSchema.safeParse({
-      email: data.get("email"),
-      password: data.get("password"),
+      email: email,
+      password: password,
     });
 
     if (!result.success) {
       setErrors(z.flattenError(result.error).fieldErrors);
       return;
     }
+    try {
+       setLoading(true);
+      const loginRes = (await axiosInstance.post("login", {
+        email: email,
+        password: password,
+      })) as User;
 
-    setErrors({});
-    router.push("/admin/dashboard");
+      if (loginRes.isAdmin) {
+        router.push("/admin/dashboard");
+        return;
+      }
+
+      router.push("/user/dashboard");
+    } catch (err: unknown) {
+      const error = err as { response?: { data?: { message?: string } } };
+      const errorMessage = error.response?.data?.message || "حدث خطأ ما";
+      toast.error(errorMessage);
+    } finally {
+      setLoading(false);
+      setErrors({});
+    }
   };
 
   return (
@@ -47,7 +70,9 @@ export const LoginForm = () => {
 
       <div className="flex flex-1 items-center justify-center py-10">
         <div className="w-full max-w-sm space-y-6">
-          <h1 className="text-center text-2xl font-semibold">{t("auth.title")}</h1>
+          <h1 className="text-center text-2xl font-semibold">
+            {t("auth.title")}
+          </h1>
 
           <form noValidate onSubmit={onSubmit} className="space-y-5">
             <div className="space-y-2">
@@ -94,8 +119,13 @@ export const LoginForm = () => {
               <FieldError message={errors.password && t(errors.password[0])} />
             </div>
 
-            <Button type="submit" size="lg" className="h-11 w-full rounded-xl">
-              {t("auth.login")}
+            <Button
+              type="submit"
+              size="lg"
+              className="h-11 w-full rounded-xl"
+              disabled={loading}
+            >
+              {!loading ? t("auth.login") : t("auth.loading")}
             </Button>
           </form>
         </div>
