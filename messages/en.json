@@ -10,8 +10,10 @@
     "payroll": "Payroll",
     "requests": "Requests",
     "payslips": "Payslips",
-    "profile": "Profile",
-    "addUser": "Add User"
+    "profile": "Profile"
+  },
+  "employees": {
+    "add": "Add Employee"
   },
   "theme": {
     "light": "Light",
@@ -34,6 +36,8 @@
     "home": "Back home"
   },
   "auth": {
+    "logout": "Log out",
+    "logoutFailed": "Failed to log out",
     "title": "Login first to your account",
     "email": "Email Address",
     "emailPlaceholder": "you@company.com",
@@ -49,6 +53,8 @@
     "rights": "All rights reserved.",
     "terms": "Terms & Conditions",
     "privacy": "Privacy Policy",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "hidePassword": "Hide password",
+    "invalidCredentials": "Invalid email or password"
   }
 }

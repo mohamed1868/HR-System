@@ -1,54 +1,62 @@
-import { TDataLogin } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { prisma } from "@/lib/prisma";
+import { loginSchema } from "@/lib/validations/auth";
 
 export const POST = async (request: NextRequest) => {
   try {
-    const userData = (await request.json()) as TDataLogin;
-    const checkUser = await prisma.user.findUnique({
-      where: {
-        email: userData.email,
-      },
-    });
-    if (!checkUser) {
+    const body = await request.json();
+    const parsed = loginSchema.safeParse(body);
+    if (!parsed.success) {
       return NextResponse.json(
-        { message: "this user not found" },
+        { message: "Invalid email or password" },
         { status: 400 },
       );
     }
 
-    const hashPassword = await bcrypt.compare(
-      userData.password,
-      checkUser.password,
-    );
+    const { email, password } = parsed.data;
 
-    if (!hashPassword) {
+    const checkUser = await prisma.user.findUnique({ where: { email } });
+
+    if (!checkUser) {
+      return NextResponse.json({ message: "user not found" }, { status: 401 });
+    }
+
+    const validPassword = await bcrypt.compare(password, checkUser.password);
+
+    if (!validPassword) {
       return NextResponse.json(
         { message: "Invalid password" },
-        { status: 400 },
+        { status: 401 },
       );
     }
 
-    const tokenPayload = {
-      id: checkUser.id,
-      email: checkUser.email,
-      isAdmin: checkUser.isAdmin,
-    };
+    const token = jwt.sign(
+      { id: checkUser.id, email: checkUser.email, isAdmin: checkUser.isAdmin },
+      process.env.SECRET_KEY!,
+      { expiresIn: "7d" },
+    );
 
-    const jwtData = jwt.sign(tokenPayload, process.env.SECRET_KEY as string, {
-      expiresIn: "7d",
-    });
-
-    const login = NextResponse.json(tokenPayload, { status: 200 });
+    const login = NextResponse.json(
+      {
+        id: checkUser.id,
+        email: checkUser.email,
+        name: checkUser.name,
+        isAdmin: checkUser.isAdmin,
+        age:checkUser.age,
+        hireDate:checkUser.hireDate
+      },
+      { status: 200 },
+    );
 
     login.cookies.set({
       name: "jwt-cookie",
-      value: jwtData,
+      value: token,
       maxAge: 60 * 60 * 24 * 7,
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
       path: "/",
     });
 

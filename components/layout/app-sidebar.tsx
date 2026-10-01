@@ -1,5 +1,6 @@
 "use client";
 
+import { useContext } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
@@ -20,11 +21,13 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { accountNav, adminNav, userNav } from "@/config/nav";
+import { AuthContext } from "@/context/AuthContext";
 import { ThemeToggle } from "./theme-toggle";
 
 export const AppSidebar = () => {
   const pathname = usePathname();
-  const isAdmin = pathname.startsWith("/admin");
+  const { userData } = useContext(AuthContext);
+  const isAdmin = userData?.isAdmin ?? false;
   const t = useTranslations();
   const locale = useLocale();
   const { state, toggleSidebar } = useSidebar();

@@ -1,82 +1,43 @@
 import { NextRequest, NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
-import { User } from "@/lib/generated/prisma/client";
-import { prisma } from "@/lib/prisma";
+import { verifyToken } from "@/lib/auth";
 
-export async function proxy(request: NextRequest) {
+export function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
-    
-    if (pathname === "/login" || pathname === "/api/login") {
-        const jwtCookie = request.cookies.get("jwt-cookie")?.value;
-        
-        if (jwtCookie && pathname === "/login") {
-            try {
-                const jwtVerify = jwt.verify(jwtCookie, process.env.SECRET_KEY!) as User;
-                const checkuser = await prisma.user.findUnique({
-                    where: { email: jwtVerify.email },
-                });
-                if (checkuser) {
-                    return NextResponse.redirect(
-                        new URL(checkuser.isAdmin ? "/admin/dashboard" : "/user/dashboard", request.url)
-                    );
-                }
-            } catch {
-                const res = NextResponse.next();
-                res.cookies.delete("jwt-cookie");
-                return res;
-            }
-        }
+    const user = verifyToken(request.cookies.get("jwt-cookie")?.value);
+    const isApi = pathname.startsWith("/api/");
+    const dashboardUrl = new URL(user?.isAdmin ? "/admin/dashboard" : "/user/dashboard", request.url);
+
+    if (pathname === "/api/login") {
         return NextResponse.next();
     }
 
-    const jwtCookie = request.cookies.get("jwt-cookie")?.value;
-
-    if (!jwtCookie) {
-        if (pathname.startsWith("/api/")) {
-            return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-        }
-        return NextResponse.redirect(new URL('/login', request.url));
-    }
-
-    try {
-        const jwtVerify = jwt.verify(jwtCookie, process.env.SECRET_KEY!) as User;
-        const checkuser = await prisma.user.findUnique({
-            where: { email: jwtVerify.email }
-        });
-
-        if (!checkuser) {
-            if (pathname.startsWith("/api/")) {
-                return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-            }
-            return NextResponse.redirect(new URL('/login', request.url));
-        }
-
-        if ((pathname.startsWith("/admin") || pathname.startsWith("/api/admin")) && !checkuser.isAdmin) {
-            if (pathname.startsWith("/api/")) {
-                return NextResponse.json({ message: "Forbidden" }, { status: 403 });
-            }
-            return NextResponse.redirect(new URL('/user/dashboard', request.url));
-        }
-
-        if ((pathname.startsWith("/user") || pathname.startsWith("/api/user")) && checkuser.isAdmin) {
-            if (pathname.startsWith("/api/")) {
-                return NextResponse.json({ message: "Forbidden for admin" }, { status: 403 });
-            }
-            return NextResponse.redirect(new URL('/admin/dashboard', request.url));
-        }
-
+    if (pathname === "/login") {
+        if (user) return NextResponse.redirect(dashboardUrl);
         return NextResponse.next();
-
-    } catch (error) {
-        if (pathname.startsWith("/api/")) {
-            return NextResponse.json({ message: "Invalid token" }, { status: 401 });
-        }
-        return NextResponse.redirect(new URL('/login', request.url));
     }
+
+    if (!user) {
+        if (isApi) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+        return NextResponse.redirect(new URL("/login", request.url));
+    }
+
+    if (pathname === "/") {
+        return NextResponse.redirect(dashboardUrl);
+    }
+
+    const isAdminPage = pathname.startsWith("/admin") || pathname.startsWith("/api/admin");
+    const isUserPage = pathname.startsWith("/user") || pathname.startsWith("/api/user");
+
+    if ((isAdminPage && !user.isAdmin) || (isUserPage && user.isAdmin)) {
+        if (isApi) return NextResponse.json({ message: "Forbidden" }, { status: 403 });
+        return NextResponse.redirect(dashboardUrl);
+    }
+
+    return NextResponse.next();
 }
 
 export const config = {
     matcher: [
-        "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+        "/((?!_next/static|_next/image|favicon.ico|.*\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
     ],
 };

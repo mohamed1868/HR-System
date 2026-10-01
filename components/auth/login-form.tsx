@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
@@ -14,7 +14,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { loginSchema, type LoginInput } from "@/lib/validations/auth";
 import { axiosInstance } from "@/lib/axios";
-import { User } from "@/lib/generated/prisma/client";
+import type { TUserData } from "@/lib/types";
+import { AuthContext } from "@/context/AuthContext";
 import { toast } from "sonner";
 
 type LoginErrors = Partial<Record<keyof LoginInput, string[]>>;
@@ -22,6 +23,7 @@ type LoginErrors = Partial<Record<keyof LoginInput, string[]>>;
 export const LoginForm = () => {
   const t = useTranslations();
   const router = useRouter();
+  const { setUserData } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<LoginErrors>({});
   const [loading, setLoading] = useState<boolean>(false);
@@ -39,26 +41,15 @@ export const LoginForm = () => {
       setErrors(z.flattenError(result.error).fieldErrors);
       return;
     }
+    setErrors({});
+    setLoading(true);
     try {
-       setLoading(true);
-      const loginRes = (await axiosInstance.post("login", {
-        email: email,
-        password: password,
-      })) as User;
-
-      if (loginRes.isAdmin) {
-        router.push("/admin/dashboard");
-        return;
-      }
-
-      router.push("/user/dashboard");
-    } catch (err: unknown) {
-      const error = err as { response?: { data?: { message?: string } } };
-      const errorMessage = error.response?.data?.message || "حدث خطأ ما";
-      toast.error(errorMessage);
-    } finally {
+      const loginRes = (await axiosInstance.post("login", result.data)) as TUserData;
+      setUserData(loginRes);
+      router.replace(loginRes.isAdmin ? "/admin/dashboard" : "/user/dashboard");
+    } catch {
+      toast.error(t("auth.invalidCredentials"));
       setLoading(false);
-      setErrors({});
     }
   };
 
@@ -110,7 +101,7 @@ export const LoginForm = () => {
                   variant="ghost"
                   size="icon-sm"
                   onClick={() => setShowPassword((v) => !v)}
-                  aria-label={t("auth.showPassword")}
+                  aria-label={t(showPassword ? "auth.hidePassword" : "auth.showPassword")}
                   className="absolute inset-e-2 top-1/2 -translate-y-1/2 text-muted-foreground"
                 >
                   {showPassword ? <EyeOff /> : <Eye />}

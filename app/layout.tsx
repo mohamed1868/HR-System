@@ -5,6 +5,8 @@ import { getLocale } from "next-intl/server";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { AuthProvider } from "@/context/AuthContext";
+import { getCurrentUser } from "@/lib/session";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
@@ -25,6 +27,7 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   const locale = await getLocale();
+  const user = await getCurrentUser();
 
   return (
     <html
@@ -36,7 +39,9 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <NextIntlClientProvider>
-            <TooltipProvider>{children}</TooltipProvider>
+            <AuthProvider initialUser={user}>
+              <TooltipProvider>{children}</TooltipProvider>
+            </AuthProvider>
             <Toaster />
           </NextIntlClientProvider>
         </ThemeProvider>
