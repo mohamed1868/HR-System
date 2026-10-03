@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { prisma } from "@/lib/prisma";
 import { loginSchema } from "@/lib/validations/auth";
+import { JwtPayload } from "@/lib/types";
 
 export const POST = async (request: NextRequest) => {
   try {
@@ -33,7 +34,7 @@ export const POST = async (request: NextRequest) => {
     }
 
     const token = jwt.sign(
-      { id: checkUser.id, email: checkUser.email, isAdmin: checkUser.isAdmin },
+      { id: checkUser.id, email: checkUser.email, isAdmin: checkUser.isAdmin } as JwtPayload,
       process.env.SECRET_KEY!,
       { expiresIn: "7d" },
     );

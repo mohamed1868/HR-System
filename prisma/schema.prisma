@@ -21,4 +21,5 @@ model User {
   isAdmin Boolean @default(false)
   hireDate  DateTime? 
   age Int @default(25)
+  job String @default("sales")
 }

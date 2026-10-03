@@ -10,5 +10,6 @@ export type TUserData = {
   name: string;
   isAdmin: boolean;
   age: number;
-  hireDate: Date | null;
+  job: string;
+  hireDate?: Date;
 };
