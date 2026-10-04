@@ -24,12 +24,12 @@ export const registerSchema = z.object({
 });
 
 export const userSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
-  name: z.string().min(2, "Name must be at least 2 characters"),
+  email: z.string().email("auth.emailInvalid"),
+  password: z.string("employees.errors.passwordMin").min(6, "employees.errors.passwordMin"),
+  name: z.string().min(2, "employees.errors.nameMin"),
   isAdmin: z.boolean().default(false),
-  age: z.number().int().positive("Age must be a positive number").default(25),
-  job: z.string().min(2, "Job title is required").default("sales"),
+  age: z.number("employees.errors.ageInvalid").int("employees.errors.ageInvalid").positive("employees.errors.ageInvalid").default(25),
+  job: z.string().min(2, "employees.errors.jobRequired").default("sales"),
   hireDate: z.coerce.date().optional(),
 });
 

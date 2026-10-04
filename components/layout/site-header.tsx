@@ -18,15 +18,8 @@ import {
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { AuthContext } from "@/context/AuthContext";
 import { axiosInstance } from "@/lib/axios";
+import { getInitials } from "@/lib/utils";
 import { LanguageToggle } from "./language-toggle";
-
-const getInitials = (name?: string) =>
-  name
-    ?.split(" ")
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0].toUpperCase())
-    .join("") || "?";
 
 export const SiteHeader = () => {
   const t = useTranslations();

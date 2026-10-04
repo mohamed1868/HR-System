@@ -1,9 +1,15 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
-export const metadata: Metadata = { title: "Add Employee" };
+import { EmployeeForm } from "@/components/admin/employees/employee-form";
 
-const NewEmployeePage = () => {
-  return <></>;
+export const metadata: Metadata = { title: "Edit Employee" };
+
+const EditEmployeePage = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = await params;
+  if (!/^\d+$/.test(id)) notFound();
+
+  return <EmployeeForm id={id} />;
 };
 
-export default NewEmployeePage;
+export default EditEmployeePage;

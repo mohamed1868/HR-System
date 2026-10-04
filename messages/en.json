@@ -13,7 +13,56 @@
     "profile": "Profile"
   },
   "employees": {
-    "add": "Add Employee"
+    "add": "Add Employee",
+    "edit": "Edit Employee",
+    "search": "Search by name, email or job...",
+    "empty": "No employees found",
+    "notFound": "Employee not found",
+    "loadFailed": "Couldn't load employees",
+    "created": "Employee created successfully",
+    "updated": "Employee updated successfully",
+    "deleted": "Employee deleted successfully",
+    "saveFailed": "Couldn't save the employee",
+    "deleteFailed": "Couldn't delete the employee",
+    "columns": {
+      "employee": "Employee",
+      "job": "Job Title",
+      "age": "Age",
+      "hireDate": "Hire Date",
+      "role": "Role"
+    },
+    "role": {
+      "admin": "Admin",
+      "employee": "Employee"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "delete": {
+      "title": "Delete this employee?",
+      "description": "{name} will be permanently removed."
+    },
+    "form": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "password": "Password",
+      "passwordHint": "Leave empty to keep the current password",
+      "job": "Job Title",
+      "age": "Age",
+      "hireDate": "Hire Date",
+      "isAdmin": "Admin access",
+      "save": "Save",
+      "saving": "Saving...",
+      "cancel": "Cancel"
+    },
+    "errors": {
+      "nameMin": "Name must be at least 2 characters",
+      "passwordMin": "Password must be at least 6 characters",
+      "jobRequired": "Please enter a job title",
+      "ageInvalid": "Please enter a valid age",
+      "emailExists": "This email is already in use"
+    }
   },
   "theme": {
     "light": "Light",

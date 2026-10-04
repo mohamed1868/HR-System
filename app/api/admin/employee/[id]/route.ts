@@ -2,10 +2,11 @@ import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/session";
 import { editUserSchema, TEditUserData } from "@/lib/validations/auth";
 import { NextRequest, NextResponse } from "next/server";
+import bcrypt from "bcrypt";
 
-export const GET = async (request: NextRequest, { params }: { params: { id: string } }) => {
+export const GET = async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
     try {
-        const userID = parseInt(params.id);
+        const userID = parseInt((await params).id);
         const user = await getCurrentUser();
         if (!user) {
             return NextResponse.json({ message: "user not found" }, { status: 401 });
@@ -42,9 +43,9 @@ export const GET = async (request: NextRequest, { params }: { params: { id: stri
     }
 }
 
-export const PUT = async (request: NextRequest, { params }: { params: { id: string } }) => {
+export const PUT = async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
     try {
-        const userID = parseInt(params.id);
+        const userID = parseInt((await params).id);
         const body: TEditUserData = await request.json();
         const user = await getCurrentUser();
         if (!user) {
@@ -84,7 +85,10 @@ export const PUT = async (request: NextRequest, { params }: { params: { id: stri
             where: {
                 id: userID
             },
-            data: checkValidtionData.data,
+            data: {
+                ...checkValidtionData.data,
+                password: checkValidtionData.data.password && await bcrypt.hash(checkValidtionData.data.password, 10)
+            },
             select: {
                 email: true,
                 name: true,
@@ -103,9 +107,9 @@ export const PUT = async (request: NextRequest, { params }: { params: { id: stri
     }
 }
 
-export const DELETE = async (request: NextRequest, { params }: { params: { id: string } }) => {
+export const DELETE = async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
     try {
-        const userID = parseInt(params.id);
+        const userID = parseInt((await params).id);
         const user = await getCurrentUser();
         if (!user) {
             return NextResponse.json({ message: "user not found" }, { status: 401 });
