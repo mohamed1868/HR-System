@@ -113,5 +113,60 @@
     "loading": "Loading...",
     "hidePassword": "Hide password",
     "invalidCredentials": "Invalid email or password"
+  },
+  "requests": {
+    "add": "New Request",
+    "edit": "Edit Request",
+    "empty": "You have no requests yet",
+    "notFound": "Request not found",
+    "locked": "This request is no longer pending, so it can't be changed",
+    "loadFailed": "Couldn't load your requests",
+    "created": "Request created successfully",
+    "updated": "Request updated successfully",
+    "deleted": "Request deleted successfully",
+    "saveFailed": "Couldn't save the request",
+    "deleteFailed": "Couldn't delete the request",
+    "columns": {
+      "type": "Type",
+      "date": "Date",
+      "time": "Time",
+      "note": "Note",
+      "status": "Status"
+    },
+    "type": {
+      "LEAVE": "Leave",
+      "PERMISSION": "Permission",
+      "MISSION": "Mission",
+      "ADVANCE": "Advance"
+    },
+    "status": {
+      "PENDING": "Pending",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "delete": {
+      "title": "Delete this request?",
+      "description": "This request will be permanently removed."
+    },
+    "form": {
+      "type": "Request Type",
+      "date": "Date",
+      "fromTime": "From",
+      "toTime": "To",
+      "note": "Note",
+      "save": "Save",
+      "saving": "Saving...",
+      "cancel": "Cancel"
+    },
+    "errors": {
+      "typeInvalid": "Please choose a valid request type",
+      "noteRequired": "Please enter a note",
+      "dateInvalid": "Please enter a valid date",
+      "timeInvalid": "Please enter a valid time"
+    }
   }
 }

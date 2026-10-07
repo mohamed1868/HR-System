@@ -17,8 +17,12 @@ export function proxy(request: NextRequest) {
     }
 
     if (!user) {
-        if (isApi) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-        return NextResponse.redirect(new URL("/login", request.url));
+        if (isApi){
+           return NextResponse.json({ message: "Unauthorized" }, { status: 401 }); 
+        } 
+         const res = NextResponse.redirect(new URL("/login", request.url));
+         res.cookies.delete("jwt-cookie")
+         return res
     }
 
     if (pathname === "/") {

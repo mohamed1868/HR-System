@@ -15,7 +15,7 @@ import { Label } from "@/components/ui/label";
 import { AuthContext } from "@/context/AuthContext";
 import { axiosInstance } from "@/lib/axios";
 import { getInitials } from "@/lib/utils";
-import { editUserSchema } from "@/lib/validations/auth";
+import { editUserSchema } from "@/lib/validations/user";
 
 export const ProfileForm = () => {
   const t = useTranslations();

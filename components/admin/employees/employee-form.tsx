@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { axiosInstance } from "@/lib/axios";
 import type { TUserData } from "@/lib/types";
-import { editUserSchema, userSchema } from "@/lib/validations/auth";
+import { editUserSchema, userSchema } from "@/lib/validations/user";
 
 export const EmployeeForm = ({ id }: { id?: string }) => {
   const t = useTranslations();

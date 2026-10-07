@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/session";
-import { userSchema, TAddUserData } from "@/lib/validations/auth";
+import { userSchema, TAddUserData } from "@/lib/validations/user";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { prisma } from "@/lib/prisma";
-import { loginSchema } from "@/lib/validations/auth";
+import { loginSchema } from "@/lib/validations/user";
 import { JwtPayload } from "@/lib/types";
 
 export const POST = async (request: NextRequest) => {
