@@ -26,6 +26,7 @@ export const GET = async (request: NextRequest) => {
                 isAdmin: true,
                 age: true,
                 hireDate: true,
+                salary: true,
                 job: true
             },
         })
@@ -33,7 +34,7 @@ export const GET = async (request: NextRequest) => {
         return NextResponse.json({ message: "get users done", data: getUsers }, { status: 200 });
 
     } catch (error) {
-        console.error("Login error:", error);
+        console.error("Employee API error:", error);
         return NextResponse.json({ message: "Server error" }, { status: 500 });
     }
 }
@@ -76,6 +77,7 @@ export const POST = async (request: NextRequest) => {
                 name: true,
                 isAdmin: true,
                 age: true,
+                salary: true,
                 job: true,
                 hireDate: true
             }
@@ -85,7 +87,7 @@ export const POST = async (request: NextRequest) => {
         return NextResponse.json({ message: "User created successfully", data: getUsers }, { status: 201 });
 
     } catch (error) {
-        console.error("Login error:", error);
+        console.error("Employee API error:", error);
         return NextResponse.json({ message: "Server error" }, { status: 500 });
     }
 }

@@ -46,6 +46,8 @@ export const POST = async (request: NextRequest) => {
         name: checkUser.name,
         isAdmin: checkUser.isAdmin,
         age:checkUser.age,
+        job: checkUser.job,
+        salary: checkUser.salary,
         hireDate:checkUser.hireDate
       },
       { status: 200 },

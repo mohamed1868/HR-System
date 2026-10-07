@@ -7,6 +7,9 @@ import bcrypt from "bcrypt";
 export const GET = async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
     try {
         const userID = parseInt((await params).id);
+        if (Number.isNaN(userID)) {
+            return NextResponse.json({ message: "user not found" }, { status: 404 });
+        }
         const user = await getCurrentUser();
         if (!user) {
             return NextResponse.json({ message: "user not found" }, { status: 401 });
@@ -27,6 +30,7 @@ export const GET = async (request: NextRequest, { params }: { params: Promise<{ 
                 isAdmin: true,
                 age: true,
                 hireDate: true,
+                salary: true,
                 job: true
             },
         })
@@ -38,7 +42,7 @@ export const GET = async (request: NextRequest, { params }: { params: Promise<{ 
         return NextResponse.json({ message: "get user done", data: getUsers }, { status: 200 });
 
     } catch (error) {
-        console.error("Login error:", error);
+        console.error("Employee API error:", error);
         return NextResponse.json({ message: "Server error" }, { status: 500 });
     }
 }
@@ -46,6 +50,9 @@ export const GET = async (request: NextRequest, { params }: { params: Promise<{ 
 export const PUT = async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
     try {
         const userID = parseInt((await params).id);
+        if (Number.isNaN(userID)) {
+            return NextResponse.json({ message: "user not found" }, { status: 404 });
+        }
         const body: TEditUserData = await request.json();
         const user = await getCurrentUser();
         if (!user) {
@@ -87,13 +94,16 @@ export const PUT = async (request: NextRequest, { params }: { params: Promise<{ 
             },
             data: {
                 ...checkValidtionData.data,
-                password: checkValidtionData.data.password && await bcrypt.hash(checkValidtionData.data.password, 10)
+                ...(checkValidtionData.data.password && {
+                    password: await bcrypt.hash(checkValidtionData.data.password, 10)
+                })
             },
             select: {
                 email: true,
                 name: true,
                 isAdmin: true,
                 age: true,
+                salary: true,
                 job: true,
                 hireDate: true
             }
@@ -102,7 +112,7 @@ export const PUT = async (request: NextRequest, { params }: { params: Promise<{ 
         return NextResponse.json({ message: "User updated successfully", data: updatedUser }, { status: 200 });
 
     } catch (error) {
-        console.error("Login error:", error);
+        console.error("Employee API error:", error);
         return NextResponse.json({ message: "Server error" }, { status: 500 });
     }
 }
@@ -110,6 +120,9 @@ export const PUT = async (request: NextRequest, { params }: { params: Promise<{ 
 export const DELETE = async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
     try {
         const userID = parseInt((await params).id);
+        if (Number.isNaN(userID)) {
+            return NextResponse.json({ message: "user not found" }, { status: 404 });
+        }
         const user = await getCurrentUser();
         if (!user) {
             return NextResponse.json({ message: "user not found" }, { status: 401 });
@@ -129,7 +142,7 @@ export const DELETE = async (request: NextRequest, { params }: { params: Promise
         return NextResponse.json({ message: "user deleted successfully" }, { status: 200 });
 
     } catch (error) {
-        console.error("Login error:", error);
+        console.error("Employee API error:", error);
         return NextResponse.json({ message: "Server error" }, { status: 500 });
     }
 }

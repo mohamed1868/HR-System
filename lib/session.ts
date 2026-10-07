@@ -16,7 +16,8 @@ export const getCurrentUser = async () => {
       isAdmin: true,
       age: true,
       hireDate: true,
-      job: true
+      job: true,
+      salary: true
     },
   });
 };

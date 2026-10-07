@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN     "salary" TEXT NOT NULL DEFAULT '25000';

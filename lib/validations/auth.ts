@@ -27,9 +27,10 @@ export const userSchema = z.object({
   email: z.string().email("auth.emailInvalid"),
   password: z.string("employees.errors.passwordMin").min(6, "employees.errors.passwordMin"),
   name: z.string().min(2, "employees.errors.nameMin"),
-  isAdmin: z.boolean().default(false),
-  age: z.number("employees.errors.ageInvalid").int("employees.errors.ageInvalid").positive("employees.errors.ageInvalid").default(25),
-  job: z.string().min(2, "employees.errors.jobRequired").default("sales"),
+  isAdmin: z.boolean().optional(),
+  age: z.number("employees.errors.ageInvalid").int("employees.errors.ageInvalid").positive("employees.errors.ageInvalid").optional(),
+  job: z.string().min(2, "employees.errors.jobRequired").optional(),
+  salary:z.number("employees.errors.salaryInvalid").int("employees.errors.salaryInvalid").positive("employees.errors.salaryInvalid").optional(),
   hireDate: z.coerce.date().optional(),
 });
 

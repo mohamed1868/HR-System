@@ -29,7 +29,8 @@
       "job": "Job Title",
       "age": "Age",
       "hireDate": "Hire Date",
-      "role": "Role"
+      "role": "Role",
+      "salary": "Salary"
     },
     "role": {
       "admin": "Admin",
@@ -54,15 +55,22 @@
       "isAdmin": "Admin access",
       "save": "Save",
       "saving": "Saving...",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "salary": "Salary"
     },
     "errors": {
       "nameMin": "Name must be at least 2 characters",
       "passwordMin": "Password must be at least 6 characters",
       "jobRequired": "Please enter a job title",
       "ageInvalid": "Please enter a valid age",
-      "emailExists": "This email is already in use"
+      "emailExists": "This email is already in use",
+      "salaryInvalid": "Please enter a valid salary"
     }
+  },
+  "profile": {
+    "edit": "Edit Profile",
+    "updated": "Profile updated successfully",
+    "saveFailed": "Couldn't update your profile"
   },
   "theme": {
     "light": "Light",

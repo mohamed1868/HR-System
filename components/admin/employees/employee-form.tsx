@@ -14,13 +14,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { axiosInstance } from "@/lib/axios";
-import type { TEmployee } from "@/lib/types";
+import type { TUserData } from "@/lib/types";
 import { editUserSchema, userSchema } from "@/lib/validations/auth";
 
 export const EmployeeForm = ({ id }: { id?: string }) => {
   const t = useTranslations();
   const router = useRouter();
-  const [employee, setEmployee] = useState<TEmployee | null>(null);
+  const [employee, setEmployee] = useState<TUserData | null>(null);
   const [loading, setLoading] = useState(!!id);
   const [saving, setSaving] = useState(false);
   const [errors, setErrors] = useState<Record<string, string[] | undefined>>({});
@@ -49,6 +49,7 @@ export const EmployeeForm = ({ id }: { id?: string }) => {
       password: form.get("password") || undefined,
       job: form.get("job"),
       age: Number(form.get("age")),
+      salary: Number(form.get("salary")),
       isAdmin: form.get("isAdmin") === "on",
       hireDate: form.get("hireDate") || undefined,
     });
@@ -81,7 +82,8 @@ export const EmployeeForm = ({ id }: { id?: string }) => {
     { name: "password", type: "password", value: undefined, placeholder: id ? t("employees.form.passwordHint") : undefined },
     { name: "job", type: "text", value: employee?.job },
     { name: "age", type: "number", value: employee?.age },
-    { name: "hireDate", type: "date", value: employee?.hireDate?.slice(0, 10) },
+    { name: "salary", type: "number", value: employee?.salary },
+    { name: "hireDate", type: "date", value: employee?.hireDate ? new Date(employee.hireDate).toISOString().slice(0, 10) : undefined },
   ];
 
   return (

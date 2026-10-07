@@ -11,15 +11,6 @@ export type TUserData = {
   isAdmin: boolean;
   age: number;
   job: string;
-  hireDate: Date  | null;
-};
-
-export type TEmployee = {
-  id: number;
-  email: string;
-  name: string;
-  isAdmin: boolean;
-  age: number;
-  job: string;
-  hireDate: string | null;
+  salary: number;
+  hireDate: Date | string | null;
 };

@@ -29,17 +29,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { axiosInstance } from "@/lib/axios";
-import type { TEmployee } from "@/lib/types";
+import type { TUserData } from "@/lib/types";
 import { cn, getInitials } from "@/lib/utils";
 
 export const EmployeesList = () => {
   const t = useTranslations();
   const format = useFormatter();
-  const [employees, setEmployees] = useState<TEmployee[]>([]);
+  const [employees, setEmployees] = useState<TUserData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [search, setSearch] = useState("");
-  const [toDelete, setToDelete] = useState<TEmployee | null>(null);
+  const [toDelete, setToDelete] = useState<TUserData | null>(null);
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
@@ -97,6 +97,7 @@ export const EmployeesList = () => {
               <TableHead className="ps-4">{t("employees.columns.employee")}</TableHead>
               <TableHead>{t("employees.columns.job")}</TableHead>
               <TableHead>{t("employees.columns.age")}</TableHead>
+              <TableHead>{t("employees.columns.salary")}</TableHead>
               <TableHead>{t("employees.columns.hireDate")}</TableHead>
               <TableHead>{t("employees.columns.role")}</TableHead>
               <TableHead />
@@ -120,6 +121,7 @@ export const EmployeesList = () => {
                 </TableCell>
                 <TableCell className="capitalize">{employee.job}</TableCell>
                 <TableCell>{employee.age}</TableCell>
+                <TableCell>{format.number(employee.salary)}</TableCell>
                 <TableCell>
                   {employee.hireDate
                     ? format.dateTime(new Date(employee.hireDate), { dateStyle: "medium", timeZone: "UTC" })
