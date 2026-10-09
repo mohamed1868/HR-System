@@ -190,7 +190,23 @@
       "checkIn": "Check In",
       "checkOut": "Check Out",
       "hours": "Hours"
-    },
+    }
+  },
+  "payslips": {
+    "notAvailable": "No payslip is available for this month yet",
+    "loadFailed": "Couldn't load the payslip",
+    "month": "Month",
+    "search": "Search",
+    "period": "Pay period",
+    "netSalary": "Net salary",
+    "basicSalary": "Basic salary",
+    "bonuses": "Bonuses",
+    "deductions": "Deductions",
+    "breakdown": "Salary breakdown",
+    "paid": "Paid",
+    "unpaid": "Awaiting payment"
+  },
+  "common": {
     "errors": {
       "monthInvalid": "Please choose a valid month",
       "yearInvalid": "Please choose a valid year"

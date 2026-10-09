@@ -69,12 +69,16 @@ model Attendance {
 
 model Payroll {
   id          Int     @id @default(autoincrement())
-  month       String
+  month       Int
+  year        Int
   basicSalary Int
   deductions  Int     @default(0)
   bonuses     Int     @default(0)
   netSalary   Int
   isPaid      Boolean @default(false)
+  isPublished Boolean @default(false)
   userId      Int
   user        User    @relation(fields: [userId], references: [id])
+
+  @@unique([userId, year, month])
 }

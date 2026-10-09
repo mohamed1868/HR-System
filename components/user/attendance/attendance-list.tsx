@@ -51,11 +51,12 @@ export const AttendanceList = () => {
   const onSearch = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!selectedMonth) {
-      toast.error(t("attendance.errors.monthInvalid"));
+      toast.error(t("common.errors.monthInvalid"));
       return;
     }
     setLoading(true);
     setMonth(selectedMonth);
+    setRefresh((value) => value + 1)
   };
 
   const formatTime = (value: Date | string | null) =>

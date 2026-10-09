@@ -2,7 +2,7 @@ import { getCompanyToday } from "@/lib/company-time";
 import { Prisma } from "@/lib/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/session";
-import { attendanceMonthSchema } from "@/lib/validations/attendance";
+import { monthYearSchema } from "@/lib/validations/common";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (request: NextRequest) => {
@@ -13,7 +13,7 @@ export const GET = async (request: NextRequest) => {
         }
 
         const searchParams = request.nextUrl.searchParams;
-        const checkValidtionData = attendanceMonthSchema.safeParse({
+        const checkValidtionData = monthYearSchema.safeParse({
             month: searchParams.get("month"),
             year: searchParams.get("year"),
         });

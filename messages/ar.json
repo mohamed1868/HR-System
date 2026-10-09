@@ -190,7 +190,23 @@
       "checkIn": "الحضور",
       "checkOut": "الانصراف",
       "hours": "الساعات"
-    },
+    }
+  },
+  "payslips": {
+    "notAvailable": "لا يوجد كشف مرتب متاح لهذا الشهر بعد",
+    "loadFailed": "تعذر تحميل كشف المرتب",
+    "month": "الشهر",
+    "search": "بحث",
+    "period": "فترة المرتب",
+    "netSalary": "صافي المرتب",
+    "basicSalary": "المرتب الأساسي",
+    "bonuses": "المكافآت",
+    "deductions": "الخصومات",
+    "breakdown": "تفاصيل المرتب",
+    "paid": "تم الدفع",
+    "unpaid": "في انتظار الدفع"
+  },
+  "common": {
     "errors": {
       "monthInvalid": "من فضلك اختر شهرًا صحيحًا",
       "yearInvalid": "من فضلك اختر سنة صحيحة"

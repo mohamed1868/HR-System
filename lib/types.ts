@@ -34,3 +34,15 @@ export type TAttendanceData = {
   checkOut: Date | string | null;
   user: { name: string };
 };
+
+export type TPayslipData = {
+  id: number;
+  month: number;
+  year: number;
+  basicSalary: number;
+  bonuses: number;
+  deductions: number;
+  netSalary: number;
+  isPaid: boolean;
+  user: { name: string; job: string };
+};
