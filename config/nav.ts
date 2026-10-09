@@ -1,5 +1,4 @@
 import {
-  CalendarCheck,
   Clock,
   FileText,
   LayoutDashboard,
@@ -19,7 +18,7 @@ export interface NavItem {
 export const adminNav: NavItem[] = [
   { titleKey: "nav.dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
   { titleKey: "nav.employees", href: "/admin/employees", icon: Users },
-  { titleKey: "nav.attendance", href: "/admin/attendance", icon: CalendarCheck },
+  { titleKey: "nav.requests", href: "/admin/requests", icon: FileText },
   { titleKey: "nav.payroll", href: "/admin/payroll", icon: Wallet },
 ];
 

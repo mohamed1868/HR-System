@@ -27,6 +27,10 @@ export type TRequestData = {
   status: RequestStatus;
 };
 
+export type TAdminRequestData = TRequestData & {
+  user: { name: string; email: string };
+};
+
 export type TAttendanceData = {
   id: number;
   date: Date | string;

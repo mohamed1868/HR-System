@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, StickyNote, Trash2 } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
 import { toast } from "sonner";
 
@@ -16,8 +16,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { RequestStatusBadge } from "@/components/shared/request-status-badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import {
   Table,
   TableBody,
@@ -31,18 +33,13 @@ import { RequestStatus } from "@/lib/generated/prisma/enums";
 import type { TRequestData } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
-const statusStyles = {
-  PENDING: "bg-amber-500/15 text-amber-600 dark:text-amber-400",
-  APPROVED: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400",
-  REJECTED: "bg-destructive/10 text-destructive",
-};
-
 export const RequestsList = () => {
   const t = useTranslations();
   const format = useFormatter();
   const [requests, setRequests] = useState<TRequestData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [note, setNote] = useState<string | null>(null);
   const [toDelete, setToDelete] = useState<TRequestData | null>(null);
   const [deleting, setDeleting] = useState(false);
 
@@ -108,11 +105,19 @@ export const RequestsList = () => {
                     {format.dateTime(new Date(request.date), { dateStyle: "medium", timeZone: "UTC" })}
                   </TableCell>
                   <TableCell>{fromTime || toTime ? `${fromTime ?? "—"} - ${toTime ?? "—"}` : "—"}</TableCell>
-                  <TableCell className="max-w-xs truncate">{request.note}</TableCell>
                   <TableCell>
-                    <span className={cn("rounded-full px-2 py-0.5 text-xs font-medium", statusStyles[request.status])}>
-                      {t(`requests.status.${request.status}`)}
-                    </span>
+                    <Button
+                      variant="ghost"
+                      size="icon-sm"
+                      aria-label={t("requests.actions.viewNote")}
+                      title={t("requests.actions.viewNote")}
+                      onClick={() => setNote(request.note)}
+                    >
+                      <StickyNote />
+                    </Button>
+                  </TableCell>
+                  <TableCell>
+                    <RequestStatusBadge status={request.status} />
                   </TableCell>
                   <TableCell className="pe-4 text-end">
                     <Link
@@ -144,6 +149,12 @@ export const RequestsList = () => {
           </TableBody>
         </Table>
       )}
+
+      <Dialog open={note !== null} onOpenChange={(open) => !open && setNote(null)}>
+        <DialogContent>
+          <p className="pe-8 text-sm leading-relaxed break-words whitespace-pre-wrap">{note}</p>
+        </DialogContent>
+      </Dialog>
 
       <AlertDialog open={!!toDelete} onOpenChange={(open) => !open && !deleting && setToDelete(null)}>
         <AlertDialogContent>

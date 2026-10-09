@@ -126,7 +126,14 @@
     "deleted": "تم حذف الطلب بنجاح",
     "saveFailed": "تعذر حفظ الطلب",
     "deleteFailed": "تعذر حذف الطلب",
+    "statusUpdated": "تم تحديث حالة الطلب",
+    "admin": {
+      "empty": "لا توجد طلبات بعد",
+      "loadFailed": "تعذر تحميل الطلبات",
+      "actionFailed": "تعذر تحديث الطلب"
+    },
     "columns": {
+      "employee": "الموظف",
       "type": "النوع",
       "date": "التاريخ",
       "time": "الوقت",
@@ -146,7 +153,10 @@
     },
     "actions": {
       "edit": "تعديل",
-      "delete": "حذف"
+      "delete": "حذف",
+      "approve": "قبول",
+      "reject": "رفض",
+      "viewNote": "عرض الملاحظة"
     },
     "delete": {
       "title": "حذف هذا الطلب؟",
@@ -166,7 +176,8 @@
       "typeInvalid": "من فضلك اختر نوع طلب صحيح",
       "noteRequired": "من فضلك أدخل ملاحظة",
       "dateInvalid": "من فضلك أدخل تاريخًا صحيحًا",
-      "timeInvalid": "من فضلك أدخل وقتًا صحيحًا"
+      "timeInvalid": "من فضلك أدخل وقتًا صحيحًا",
+      "statusInvalid": "من فضلك اختر حالة طلب صحيحة"
     }
   },
   "attendance": {

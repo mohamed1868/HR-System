@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { RequestType } from "@/lib/generated/prisma/enums";
+import { RequestStatus, RequestType } from "@/lib/generated/prisma/enums";
 
 export const requestSchema = z.object({
   type: z.enum(RequestType, "requests.errors.typeInvalid"),
@@ -11,5 +11,10 @@ export const requestSchema = z.object({
 
 export const editRequestSchema = requestSchema.partial();
 
+export const requestStatusSchema = z.object({
+  status: z.enum(RequestStatus, "requests.errors.statusInvalid"),
+});
+
 export type TAddRequestData = z.infer<typeof requestSchema>;
 export type TEditRequestData = z.infer<typeof editRequestSchema>;
+export type TRequestStatusData = z.infer<typeof requestStatusSchema>;
