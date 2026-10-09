@@ -1,5 +1,6 @@
 import {
   CalendarCheck,
+  Clock,
   FileText,
   LayoutDashboard,
   Receipt,
@@ -24,6 +25,7 @@ export const adminNav: NavItem[] = [
 
 export const userNav: NavItem[] = [
   { titleKey: "nav.dashboard", href: "/user/dashboard", icon: LayoutDashboard },
+  { titleKey: "nav.attendance", href: "/user/attendance", icon: Clock },
   { titleKey: "nav.requests", href: "/user/requests", icon: FileText },
   { titleKey: "nav.payslips", href: "/user/payslips", icon: Receipt },
 ];

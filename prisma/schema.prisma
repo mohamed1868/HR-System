@@ -63,6 +63,8 @@ model Attendance {
   status   String    @default("PRESENT")
   userId   Int
   user     User      @relation(fields: [userId], references: [id])
+
+  @@unique([userId, date])
 }
 
 model Payroll {

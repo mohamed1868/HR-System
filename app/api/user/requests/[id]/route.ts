@@ -145,7 +145,13 @@ export const PUT = async (request: NextRequest, { params }: { params: Promise<{ 
             where: {
                 id: requestId
             },
-            data: checkValidtionData.data
+            data: {
+                type: checkValidtionData.data.type,
+                note: checkValidtionData.data.note,
+                date: checkValidtionData.data.date,
+                fromTime: checkValidtionData.data.fromTime,
+                toTime: checkValidtionData.data.toTime,
+            }
         })
 
         return NextResponse.json({ data: requestUpdate }, { status: 200 });

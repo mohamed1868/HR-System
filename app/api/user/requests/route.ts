@@ -44,8 +44,12 @@ export const POST = async (request: NextRequest) => {
 
         const newRequest = await prisma.request.create({
             data: {
-                ...checkValidtionData.data,
-                userId: user.id
+                type: checkValidtionData.data.type,
+                note: checkValidtionData.data.note,
+                date: checkValidtionData.data.date,
+                fromTime: checkValidtionData.data.fromTime,
+                toTime: checkValidtionData.data.toTime,
+                userId: user.id,
             }
         })
 

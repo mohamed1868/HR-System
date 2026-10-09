@@ -168,5 +168,32 @@
       "dateInvalid": "Please enter a valid date",
       "timeInvalid": "Please enter a valid time"
     }
+  },
+  "attendance": {
+    "today": "Today",
+    "checkIn": "Check In",
+    "checkOut": "Check Out",
+    "checkedIn": "Checked in successfully",
+    "checkedOut": "Checked out successfully",
+    "alreadyCheckedIn": "You have already checked in today",
+    "alreadyCheckedOut": "You have already checked out today",
+    "checkInFirst": "You need to check in first",
+    "actionFailed": "Something went wrong, please try again",
+    "month": "Month",
+    "search": "Search",
+    "empty": "No attendance records for this month",
+    "loadFailed": "Couldn't load attendance",
+    "duration": "{hours}h {minutes}m",
+    "columns": {
+      "employee": "Employee",
+      "day": "Day",
+      "checkIn": "Check In",
+      "checkOut": "Check Out",
+      "hours": "Hours"
+    },
+    "errors": {
+      "monthInvalid": "Please choose a valid month",
+      "yearInvalid": "Please choose a valid year"
+    }
   }
 }

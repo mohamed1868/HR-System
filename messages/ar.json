@@ -168,5 +168,32 @@
       "dateInvalid": "من فضلك أدخل تاريخًا صحيحًا",
       "timeInvalid": "من فضلك أدخل وقتًا صحيحًا"
     }
+  },
+  "attendance": {
+    "today": "اليوم",
+    "checkIn": "تسجيل الحضور",
+    "checkOut": "تسجيل الانصراف",
+    "checkedIn": "تم تسجيل الحضور بنجاح",
+    "checkedOut": "تم تسجيل الانصراف بنجاح",
+    "alreadyCheckedIn": "لقد سجلت حضورك اليوم بالفعل",
+    "alreadyCheckedOut": "لقد سجلت انصرافك اليوم بالفعل",
+    "checkInFirst": "يجب تسجيل الحضور أولًا",
+    "actionFailed": "حدث خطأ، حاول مرة أخرى",
+    "month": "الشهر",
+    "search": "بحث",
+    "empty": "لا توجد سجلات حضور لهذا الشهر",
+    "loadFailed": "تعذر تحميل الحضور",
+    "duration": "{hours} س {minutes} د",
+    "columns": {
+      "employee": "الموظف",
+      "day": "اليوم",
+      "checkIn": "الحضور",
+      "checkOut": "الانصراف",
+      "hours": "الساعات"
+    },
+    "errors": {
+      "monthInvalid": "من فضلك اختر شهرًا صحيحًا",
+      "yearInvalid": "من فضلك اختر سنة صحيحة"
+    }
   }
 }

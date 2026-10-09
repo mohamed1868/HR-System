@@ -26,3 +26,11 @@ export type TRequestData = {
   toTime: Date | string | null;
   status: RequestStatus;
 };
+
+export type TAttendanceData = {
+  id: number;
+  date: Date | string;
+  checkIn: Date | string | null;
+  checkOut: Date | string | null;
+  user: { name: string };
+};

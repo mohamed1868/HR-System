@@ -9,6 +9,7 @@ export default getRequestConfig(async () => {
 
   return {
     locale,
+    timeZone: process.env.COMPANY_TIME_ZONE,
     messages: (await import(`../messages/${locale}.json`)).default,
   };
 });
