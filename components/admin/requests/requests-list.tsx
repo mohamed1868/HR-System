@@ -27,7 +27,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { TablePagination } from "@/components/shared/table-pagination";
 import { axiosInstance } from "@/lib/axios";
+import { PAGE_SIZE } from "@/lib/pagination";
 import { RequestStatus } from "@/lib/generated/prisma/enums";
 import type { TAdminRequestData } from "@/lib/types";
 
@@ -38,18 +40,25 @@ export const AdminRequestsList = () => {
   const [note, setNote] = useState<string | null>(null);
   const [toDelete, setToDelete] = useState<TAdminRequestData | null>(null);
   const [refresh, setRefresh] = useState(0);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(PAGE_SIZE);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     const getRequests = async () => {
       try {
-        const res = await axiosInstance.get("admin/requests");
+        const res = (await axiosInstance.get("admin/requests", { params: { page, limit } })) as {
+          data: TAdminRequestData[];
+          total: number;
+        };
         setRequests(res.data);
+        setTotal(res.total);
       } catch {
         toast.error(t("requests.admin.loadFailed"));
       }
     };
     getRequests();
-  }, [refresh, t]);
+  }, [page, limit, refresh, t]);
 
   const onStatusChange = async (id: number, status: RequestStatus) => {
     try {
@@ -68,6 +77,7 @@ export const AdminRequestsList = () => {
       toast.success(t("requests.deleted"));
       setToDelete(null);
       setRefresh(refresh + 1);
+      setPage(1);
     } catch {
       toast.error(t("requests.deleteFailed"));
     }
@@ -143,6 +153,8 @@ export const AdminRequestsList = () => {
           </TableBody>
         </Table>
       )}
+
+      <TablePagination page={page} limit={limit} total={total} onPageChange={setPage} onLimitChange={setLimit} />
 
       <Dialog open={note !== null} onOpenChange={() => setNote(null)}>
         <DialogContent>

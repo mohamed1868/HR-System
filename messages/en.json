@@ -15,7 +15,7 @@
   "employees": {
     "add": "Add Employee",
     "edit": "Edit Employee",
-    "search": "Search by name, email or job...",
+    "search": "Search by name or email...",
     "empty": "No employees found",
     "notFound": "Employee not found",
     "loadFailed": "Couldn't load employees",
@@ -200,7 +200,39 @@
       "day": "Day",
       "checkIn": "Check In",
       "checkOut": "Check Out",
-      "hours": "Hours"
+      "hours": "Hours",
+      "status": "Status"
+    },
+    "status": {
+      "PRESENT": "Present",
+      "LEAVE": "Leave",
+      "MISSION": "Mission"
+    }
+  },
+  "payroll": {
+    "employee": "Employee",
+    "selectEmployee": "Select an employee",
+    "month": "Month",
+    "search": "Search",
+    "attendance": "Attendance",
+    "request": "Request",
+    "attendanceDays": "{count} days",
+    "noAttendance": "No attendance this month",
+    "salary": "Salary",
+    "basicSalary": "Basic salary",
+    "bonuses": "Bonuses",
+    "deductions": "Deductions",
+    "netSalary": "Net salary",
+    "isPaid": "Paid",
+    "isPublished": "Show to employee",
+    "save": "Save",
+    "saved": "Payroll saved successfully",
+    "saveFailed": "Couldn't save the payroll",
+    "loadFailed": "Couldn't load the data",
+    "employeeNotFound": "Employee not found",
+    "errors": {
+      "employeeRequired": "Please choose an employee",
+      "amountInvalid": "Please enter a valid amount"
     }
   },
   "payslips": {
@@ -218,6 +250,11 @@
     "unpaid": "Awaiting payment"
   },
   "common": {
+    "page": "Page {page} of {totalPages}",
+    "total": "Total: {total}",
+    "rowsPerPage": "Rows per page",
+    "previous": "Previous",
+    "next": "Next",
     "errors": {
       "monthInvalid": "Please choose a valid month",
       "yearInvalid": "Please choose a valid year"

@@ -28,7 +28,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { TablePagination } from "@/components/shared/table-pagination";
 import { axiosInstance } from "@/lib/axios";
+import { PAGE_SIZE } from "@/lib/pagination";
 import { RequestStatus } from "@/lib/generated/prisma/enums";
 import type { TRequestData } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -42,12 +44,20 @@ export const RequestsList = () => {
   const [note, setNote] = useState<string | null>(null);
   const [toDelete, setToDelete] = useState<TRequestData | null>(null);
   const [deleting, setDeleting] = useState(false);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(PAGE_SIZE);
+  const [total, setTotal] = useState(0);
+  const [refresh, setRefresh] = useState(0);
 
   useEffect(() => {
     const getRequests = async () => {
       try {
-        const res = await axiosInstance.get("user/requests");
+        const res = (await axiosInstance.get("user/requests", { params: { page, limit } })) as {
+          data: TRequestData[];
+          total: number;
+        };
         setRequests(res.data);
+        setTotal(res.total);
       } catch {
         setError(true);
       } finally {
@@ -55,16 +65,17 @@ export const RequestsList = () => {
       }
     };
     getRequests();
-  }, []);
+  }, [page, limit, refresh]);
 
   const onDelete = async () => {
     if (!toDelete) return;
     setDeleting(true);
     try {
       await axiosInstance.delete(`user/requests/${toDelete.id}`);
-      setRequests((list) => list.filter((request) => request.id !== toDelete.id));
       toast.success(t("requests.deleted"));
       setToDelete(null);
+      setPage(1);
+      setRefresh(refresh + 1);
     } catch {
       toast.error(t("requests.deleteFailed"));
     } finally {
@@ -149,6 +160,8 @@ export const RequestsList = () => {
           </TableBody>
         </Table>
       )}
+
+      <TablePagination page={page} limit={limit} total={total} onPageChange={setPage} onLimitChange={setLimit} />
 
       <Dialog open={note !== null} onOpenChange={(open) => !open && setNote(null)}>
         <DialogContent>

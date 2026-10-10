@@ -1,10 +1,19 @@
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
-const Page = () => {
-    return (
-        <div>
-            test
-        </div>
-    );
-}
+import { PayrollView } from "@/components/admin/payroll/payroll-view";
 
-export default Page;
+export const metadata: Metadata = { title: "Payroll" };
+
+const PayrollPage = async () => {
+  const t = await getTranslations();
+
+  return (
+    <>
+      <h1 className="text-2xl font-semibold">{t("nav.payroll")}</h1>
+      <PayrollView />
+    </>
+  );
+};
+
+export default PayrollPage;

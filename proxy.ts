@@ -5,14 +5,14 @@ export function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
     const user = verifyToken(request.cookies.get("jwt-cookie")?.value);
     const isApi = pathname.startsWith("/api/");
-    const dashboardUrl = new URL(user?.isAdmin ? "/admin/dashboard" : "/user/dashboard", request.url);
+    const homeUrl = new URL(user?.isAdmin ? "/admin/employees" : "/user/attendance", request.url);
 
     if (pathname === "/api/login") {
         return NextResponse.next();
     }
 
     if (pathname === "/login") {
-        if (user) return NextResponse.redirect(dashboardUrl);
+        if (user) return NextResponse.redirect(homeUrl);
         return NextResponse.next();
     }
 
@@ -26,7 +26,7 @@ export function proxy(request: NextRequest) {
     }
 
     if (pathname === "/") {
-        return NextResponse.redirect(dashboardUrl);
+        return NextResponse.redirect(homeUrl);
     }
 
     const isAdminPage = pathname.startsWith("/admin") || pathname.startsWith("/api/admin");
@@ -34,7 +34,7 @@ export function proxy(request: NextRequest) {
 
     if ((isAdminPage && !user.isAdmin) || (isUserPage && user.isAdmin)) {
         if (isApi) return NextResponse.json({ message: "Forbidden" }, { status: 403 });
-        return NextResponse.redirect(dashboardUrl);
+        return NextResponse.redirect(homeUrl);
     }
 
     return NextResponse.next();

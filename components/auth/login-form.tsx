@@ -46,7 +46,7 @@ export const LoginForm = () => {
     try {
       const loginRes = (await axiosInstance.post("login", result.data)) as TUserData;
       setUserData(loginRes);
-      router.replace(loginRes.isAdmin ? "/admin/dashboard" : "/user/dashboard");
+      router.replace(loginRes.isAdmin ? "/admin/employees" : "/user/attendance");
     } catch {
       toast.error(t("auth.invalidCredentials"));
       setLoading(false);

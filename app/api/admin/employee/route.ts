@@ -1,3 +1,4 @@
+import { getPagination } from "@/lib/pagination";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/session";
 import { userSchema, TAddUserData } from "@/lib/validations/user";
@@ -15,6 +16,8 @@ export const GET = async (request: NextRequest) => {
             return NextResponse.json({ message: "Access denied" }, { status: 403 });
         }
 
+        const { skip, take } = getPagination(request.nextUrl.searchParams);
+
         const getUsers = await prisma.user.findMany({
             where: {
                 id: { not: user.id }
@@ -29,9 +32,20 @@ export const GET = async (request: NextRequest) => {
                 salary: true,
                 job: true
             },
+            orderBy: {
+                name: "asc"
+            },
+            skip,
+            take,
         })
 
-        return NextResponse.json({ message: "get users done", data: getUsers }, { status: 200 });
+        const total = await prisma.user.count({
+            where: {
+                id: { not: user.id }
+            }
+        });
+
+        return NextResponse.json({ message: "get users done", data: getUsers, total }, { status: 200 });
 
     } catch (error) {
         console.error("Employee API error:", error);

@@ -18,6 +18,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { TablePagination } from "@/components/shared/table-pagination";
+import { PAGE_SIZE } from "@/lib/pagination";
 import { axiosInstance } from "@/lib/axios";
 import type { TAttendanceData } from "@/lib/types";
 
@@ -31,6 +33,8 @@ export const AttendanceList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [refresh, setRefresh] = useState(0);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(PAGE_SIZE);
 
   useEffect(() => {
     const getAttendance = async () => {
@@ -57,6 +61,7 @@ export const AttendanceList = () => {
     setLoading(true);
     setMonth(selectedMonth);
     setRefresh((value) => value + 1)
+    setPage(1);
   };
 
   const formatTime = (value: Date | string | null) =>
@@ -67,6 +72,8 @@ export const AttendanceList = () => {
     const minutes = Math.round((new Date(record.checkOut).getTime() - new Date(record.checkIn).getTime()) / 60000);
     return t("attendance.duration", { hours: Math.floor(minutes / 60), minutes: minutes % 60 });
   };
+
+  const pageAttendance = attendance.slice((page - 1) * limit, page * limit);
 
   return (
     <>
@@ -100,13 +107,14 @@ export const AttendanceList = () => {
               <TableRow>
                 <TableHead className="ps-4">{t("attendance.columns.employee")}</TableHead>
                 <TableHead>{t("attendance.columns.day")}</TableHead>
+                <TableHead>{t("attendance.columns.status")}</TableHead>
                 <TableHead>{t("attendance.columns.checkIn")}</TableHead>
                 <TableHead>{t("attendance.columns.checkOut")}</TableHead>
                 <TableHead className="pe-4">{t("attendance.columns.hours")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {attendance.map((record) => (
+              {pageAttendance.map((record) => (
                 <TableRow key={record.id}>
                   <TableCell className="ps-4 font-medium">{record.user.name}</TableCell>
                   <TableCell>
@@ -117,6 +125,7 @@ export const AttendanceList = () => {
                       timeZone: "UTC",
                     })}
                   </TableCell>
+                  <TableCell>{t(`attendance.status.${record.status}`)}</TableCell>
                   <TableCell>{formatTime(record.checkIn)}</TableCell>
                   <TableCell>{formatTime(record.checkOut)}</TableCell>
                   <TableCell className="pe-4">{formatWorkedTime(record)}</TableCell>
@@ -125,6 +134,8 @@ export const AttendanceList = () => {
             </TableBody>
           </Table>
         )}
+
+        <TablePagination page={page} limit={limit} total={attendance.length} onPageChange={setPage} onLimitChange={setLimit} />
       </Card>
     </>
   );

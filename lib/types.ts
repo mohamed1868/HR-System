@@ -36,7 +36,33 @@ export type TAttendanceData = {
   date: Date | string;
   checkIn: Date | string | null;
   checkOut: Date | string | null;
+  status: string;
   user: { name: string };
+};
+
+export type TPayrollData = {
+  id: number;
+  month: number;
+  year: number;
+  basicSalary: number;
+  bonuses: number;
+  deductions: number;
+  netSalary: number;
+  isPaid: boolean;
+  isPublished: boolean;
+};
+
+export type TAdminPayrollData = {
+  employee: {
+    id: number;
+    name: string;
+    salary: number;
+    attendances: Omit<TAttendanceData, "user">[];
+    request: TRequestData[];
+    payrolls: TPayrollData[];
+  };
+  month: number;
+  year: number;
 };
 
 export type TPayslipData = {

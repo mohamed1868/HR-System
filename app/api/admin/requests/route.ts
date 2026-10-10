@@ -1,8 +1,9 @@
+import { getPagination } from "@/lib/pagination";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/session";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async () => {
+export const GET = async (request: NextRequest) => {
     try {
         const user = await getCurrentUser()
         if (!user) {
@@ -12,6 +13,8 @@ export const GET = async () => {
         if (!user.isAdmin) {
             return NextResponse.json({ message: "Access denied" }, { status: 403 });
         }
+
+        const { skip, take } = getPagination(request.nextUrl.searchParams);
 
         const requests = await prisma.request.findMany({
             where: {
@@ -30,10 +33,20 @@ export const GET = async () => {
             orderBy: [
                 { status: "asc" },
                 { date: "desc" }
-            ]
+            ],
+            skip,
+            take,
         })
 
-        return NextResponse.json({ data: requests }, { status: 200 });
+        const total = await prisma.request.count({
+            where: {
+                userId: {
+                    not: user.id
+                }
+            }
+        })
+
+        return NextResponse.json({ data: requests, total }, { status: 200 });
 
 
     } catch (error) {

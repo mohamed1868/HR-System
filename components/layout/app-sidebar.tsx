@@ -39,7 +39,7 @@ export const AppSidebar = () => {
     <Sidebar collapsible="icon" side={isRtl ? "right" : "left"}>
       <SidebarHeader className="h-16 flex-row items-center justify-between px-4 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-2">
         <Link
-          href={isAdmin ? "/admin/dashboard" : "/user/dashboard"}
+          href={isAdmin ? "/admin/employees" : "/user/attendance"}
           className="flex items-center gap-2 font-semibold group-data-[collapsible=icon]:hidden"
         >
           <span className="text-2xl font-bold text-brand">H</span>

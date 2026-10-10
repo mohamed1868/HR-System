@@ -1,7 +1,6 @@
 import {
   Clock,
   FileText,
-  LayoutDashboard,
   Receipt,
   UserRound,
   Users,
@@ -16,14 +15,12 @@ export interface NavItem {
 }
 
 export const adminNav: NavItem[] = [
-  { titleKey: "nav.dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
   { titleKey: "nav.employees", href: "/admin/employees", icon: Users },
   { titleKey: "nav.requests", href: "/admin/requests", icon: FileText },
   { titleKey: "nav.payroll", href: "/admin/payroll", icon: Wallet },
 ];
 
 export const userNav: NavItem[] = [
-  { titleKey: "nav.dashboard", href: "/user/dashboard", icon: LayoutDashboard },
   { titleKey: "nav.attendance", href: "/user/attendance", icon: Clock },
   { titleKey: "nav.requests", href: "/user/requests", icon: FileText },
   { titleKey: "nav.payslips", href: "/user/payslips", icon: Receipt },

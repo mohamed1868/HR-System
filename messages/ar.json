@@ -15,7 +15,7 @@
   "employees": {
     "add": "إضافة موظف",
     "edit": "تعديل الموظف",
-    "search": "ابحث بالاسم أو البريد أو الوظيفة...",
+    "search": "ابحث بالاسم أو البريد...",
     "empty": "لا يوجد موظفين",
     "notFound": "الموظف غير موجود",
     "loadFailed": "تعذّر تحميل الموظفين",
@@ -200,7 +200,39 @@
       "day": "اليوم",
       "checkIn": "الحضور",
       "checkOut": "الانصراف",
-      "hours": "الساعات"
+      "hours": "الساعات",
+      "status": "الحالة"
+    },
+    "status": {
+      "PRESENT": "حاضر",
+      "LEAVE": "إجازة",
+      "MISSION": "مأمورية"
+    }
+  },
+  "payroll": {
+    "employee": "الموظف",
+    "selectEmployee": "اختر موظفًا",
+    "month": "الشهر",
+    "search": "بحث",
+    "attendance": "الحضور",
+    "request": "الطلب",
+    "attendanceDays": "{count} يوم",
+    "noAttendance": "لا يوجد حضور في هذا الشهر",
+    "salary": "المرتب",
+    "basicSalary": "المرتب الأساسي",
+    "bonuses": "المكافآت",
+    "deductions": "الخصومات",
+    "netSalary": "صافي المرتب",
+    "isPaid": "تم الدفع",
+    "isPublished": "إظهار للموظف",
+    "save": "حفظ",
+    "saved": "تم حفظ المرتب بنجاح",
+    "saveFailed": "تعذر حفظ المرتب",
+    "loadFailed": "تعذر تحميل البيانات",
+    "employeeNotFound": "الموظف غير موجود",
+    "errors": {
+      "employeeRequired": "من فضلك اختر موظفًا",
+      "amountInvalid": "من فضلك أدخل مبلغًا صحيحًا"
     }
   },
   "payslips": {
@@ -218,6 +250,11 @@
     "unpaid": "في انتظار الدفع"
   },
   "common": {
+    "page": "صفحة {page} من {totalPages}",
+    "total": "الإجمالي: {total}",
+    "rowsPerPage": "عدد الصفوف",
+    "previous": "السابق",
+    "next": "التالي",
     "errors": {
       "monthInvalid": "من فضلك اختر شهرًا صحيحًا",
       "yearInvalid": "من فضلك اختر سنة صحيحة"

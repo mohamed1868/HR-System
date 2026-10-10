@@ -28,7 +28,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { TablePagination } from "@/components/shared/table-pagination";
 import { axiosInstance } from "@/lib/axios";
+import { PAGE_SIZE } from "@/lib/pagination";
 import type { TUserData } from "@/lib/types";
 import { cn, getInitials } from "@/lib/utils";
 
@@ -39,14 +41,28 @@ export const EmployeesList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(PAGE_SIZE);
+  const [total, setTotal] = useState(0);
+  const [refresh, setRefresh] = useState(0);
   const [toDelete, setToDelete] = useState<TUserData | null>(null);
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const getEmployees = async () => {
       try {
-        const res = await axiosInstance.get("admin/employee");
-        setEmployees(res.data);
+        if (search) {
+          const res = await axiosInstance.get("admin/employee/search", { params: { search } });
+          setEmployees(res.data);
+          setTotal(res.data.length);
+        } else {
+          const res = (await axiosInstance.get("admin/employee", { params: { page, limit } })) as {
+            data: TUserData[];
+            total: number;
+          };
+          setEmployees(res.data);
+          setTotal(res.total);
+        }
       } catch {
         setError(true);
       } finally {
@@ -54,22 +70,25 @@ export const EmployeesList = () => {
       }
     };
     getEmployees();
-  }, []);
+  }, [page, limit, search, refresh]);
 
   const onDelete = async () => {
     if (!toDelete) return;
     setDeleting(true);
     try {
       await axiosInstance.delete(`admin/employee/${toDelete.id}`);
-      setEmployees((list) => list.filter((employee) => employee.id !== toDelete.id));
       toast.success(t("employees.deleted"));
       setToDelete(null);
+      setPage(1);
+      setRefresh(refresh + 1);
     } catch {
       toast.error(t("employees.deleteFailed"));
     } finally {
       setDeleting(false);
     }
   };
+
+  const rows = search ? employees.slice((page - 1) * limit, page * limit) : employees;
 
   return (
     <Card className="gap-0 py-0">
@@ -79,7 +98,10 @@ export const EmployeesList = () => {
           <Input
             type="search"
             value={search}
-            onChange={(event) => setSearch(event.target.value)}
+            onChange={(event) => {
+              setSearch(event.target.value);
+              setPage(1);
+            }}
             placeholder={t("employees.search")}
             className="h-10 rounded-xl ps-9"
           />
@@ -104,7 +126,7 @@ export const EmployeesList = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {employees.map((employee) => (
+            {rows.map((employee) => (
               <TableRow key={employee.id}>
                 <TableCell className="ps-4">
                   <div className="flex items-center gap-3">
@@ -160,6 +182,8 @@ export const EmployeesList = () => {
           </TableBody>
         </Table>
       )}
+
+      <TablePagination page={page} limit={limit} total={total} onPageChange={setPage} onLimitChange={setLimit} />
 
       <AlertDialog open={!!toDelete} onOpenChange={(open) => !open && !deleting && setToDelete(null)}>
         <AlertDialogContent>

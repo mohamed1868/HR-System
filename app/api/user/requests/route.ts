@@ -1,14 +1,17 @@
+import { getPagination } from "@/lib/pagination";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/session";
 import { requestSchema } from "@/lib/validations/request";
 import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async () => {
+export const GET = async (request: NextRequest) => {
     try {
         const user = await getCurrentUser()
         if (!user) {
             return NextResponse.json({ message: "user not found" }, { status: 401 });
         }
+
+        const { skip, take } = getPagination(request.nextUrl.searchParams);
 
         const requests = await prisma.request.findMany({
             where: {
@@ -16,10 +19,18 @@ export const GET = async () => {
             },
             orderBy: {
                 createdAt: "desc"
+            },
+            skip,
+            take,
+        })
+
+        const total = await prisma.request.count({
+            where: {
+                userId: user.id
             }
         })
 
-        return NextResponse.json({ data: requests }, { status: 200 });
+        return NextResponse.json({ data: requests, total }, { status: 200 });
 
 
     } catch (error) {
