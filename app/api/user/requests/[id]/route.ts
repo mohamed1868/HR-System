@@ -118,6 +118,10 @@ export const PUT = async (request: NextRequest, { params }: { params: Promise<{ 
             return NextResponse.json({ message: checkValidtionData.error.issues.map((issue) => issue.message) }, { status: 400 });
         }
 
+        const { fromTime, toTime } = checkValidtionData.data;
+        if (fromTime && toTime && toTime <= fromTime) {
+            return NextResponse.json({ message: ["requests.errors.timeRange"] }, { status: 400 });
+        }
 
         const requestData = await prisma.request.findUnique({
             where: {

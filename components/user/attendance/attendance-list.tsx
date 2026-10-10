@@ -80,7 +80,7 @@ export const AttendanceList = () => {
       <AttendanceCard onChange={() => setRefresh((value) => value + 1)} />
 
       <Card className="gap-0 py-0">
-        <form onSubmit={onSearch} className="flex items-center justify-between gap-3 border-b p-4">
+        <form onSubmit={onSearch} className="flex flex-wrap items-center justify-between gap-3 border-b p-4">
           <div className="flex items-center gap-3">
             <Label htmlFor="month">{t("attendance.month")}</Label>
             <Input

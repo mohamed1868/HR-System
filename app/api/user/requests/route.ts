@@ -53,6 +53,11 @@ export const POST = async (request: NextRequest) => {
             return NextResponse.json({ message: checkValidtionData.error.issues.map((issue) => issue.message) }, { status: 400 });
         }
 
+        const { fromTime, toTime } = checkValidtionData.data;
+        if (fromTime && toTime && toTime <= fromTime) {
+            return NextResponse.json({ message: ["requests.errors.timeRange"] }, { status: 400 });
+        }
+
         const newRequest = await prisma.request.create({
             data: {
                 type: checkValidtionData.data.type,

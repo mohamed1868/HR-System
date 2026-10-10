@@ -115,7 +115,9 @@ export const AdminRequestsList = () => {
                   {format.dateTime(new Date(request.date), { dateStyle: "medium", timeZone: "UTC" })}
                 </TableCell>
                 <TableCell>
-                  {formatTime(request.fromTime)} - {formatTime(request.toTime)}
+                  {request.fromTime || request.toTime
+                    ? `${formatTime(request.fromTime)} - ${formatTime(request.toTime)}`
+                    : "—"}
                 </TableCell>
                 <TableCell>
                   <RequestStatusBadge status={request.status} />

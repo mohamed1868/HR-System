@@ -62,6 +62,12 @@ export const RequestForm = ({ id }: { id?: string }) => {
       setErrors(z.flattenError(result.error).fieldErrors);
       return;
     }
+
+    const { fromTime: from, toTime: to } = result.data;
+    if (from && to && to <= from) {
+      setErrors({ toTime: ["requests.errors.timeRange"] });
+      return;
+    }
     setErrors({});
     setSaving(true);
 

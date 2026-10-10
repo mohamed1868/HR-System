@@ -177,6 +177,7 @@
       "noteRequired": "Please enter a note",
       "dateInvalid": "Please enter a valid date",
       "timeInvalid": "Please enter a valid time",
+      "timeRange": "End time must be after start time",
       "statusInvalid": "Please choose a valid request status"
     }
   },

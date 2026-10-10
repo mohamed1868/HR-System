@@ -57,7 +57,7 @@ export const PayslipView = () => {
   return (
     <>
       <Card className="py-0">
-        <form onSubmit={onSearch} className="flex items-center justify-between gap-3 p-4">
+        <form onSubmit={onSearch} className="flex flex-wrap items-center justify-between gap-3 p-4">
           <div className="flex items-center gap-3">
             <Label htmlFor="month">{t("payslips.month")}</Label>
             <Input
