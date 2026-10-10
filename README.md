@@ -3,6 +3,15 @@
 A simple HR system built with Next.js.
 Admins manage employees, requests and payroll. Employees check in / out, send requests and see their payslips.
 
+## Live Demo
+
+[hr-system-lovat-two.vercel.app](https://hr-system-lovat-two.vercel.app/login)
+
+| Role     | Email             | Password |
+| -------- | ----------------- | -------- |
+| Admin    | mohamed@gmail.com | 123456   |
+| Employee | sayed@gmail.com   | 123456   |
+
 ## Features
 
 **Admin**
