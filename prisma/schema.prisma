@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum RequestType {
+  LEAVE
+  PERMISSION
+  MISSION
+  ADVANCE
+}
+
+model User {
+  id          Int          @id @default(autoincrement())
+  email       String       @unique
+  name        String       @default("user")
+  password    String
+  isAdmin     Boolean      @default(false)
+  age         Int          @default(25)
+  job         String       @default("sales")
+  salary      Int          @default(25000)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  hireDate    DateTime?
+  request     Request[]
+  attendances Attendance[]
+  payrolls    Payroll[]
+}
+
+model Request {
+  id        Int           @id @default(autoincrement())
+  type      RequestType   @default(LEAVE)
+  note      String
+  date      DateTime
+  fromTime  DateTime?
+  toTime    DateTime?
+  status    RequestStatus @default(PENDING)
+  createdAt DateTime      @default(now())
+  userId    Int
+  user      User          @relation(fields: [userId], references: [id])
+}
+
+model Attendance {
+  id       Int       @id @default(autoincrement())
+  date     DateTime  @default(now())
+  checkIn  DateTime?
+  checkOut DateTime?
+  status   String    @default("PRESENT")
+  userId   Int
+  user     User      @relation(fields: [userId], references: [id])
+
+  @@unique([userId, date])
+}
+
+model Payroll {
+  id          Int     @id @default(autoincrement())
+  month       Int
+  year        Int
+  basicSalary Int
+  deductions  Int     @default(0)
+  bonuses     Int     @default(0)
+  netSalary   Int
+  isPaid      Boolean @default(false)
+  isPublished Boolean @default(false)
+  userId      Int
+  user        User    @relation(fields: [userId], references: [id])
+
+  @@unique([userId, year, month])
+}

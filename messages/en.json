@@ -1,0 +1,264 @@
+{
+  "app": {
+    "name": "HR System"
+  },
+  "nav": {
+    "collapse": "Collapse sidebar",
+    "dashboard": "Dashboard",
+    "employees": "Employees",
+    "attendance": "Attendance",
+    "payroll": "Payroll",
+    "requests": "Requests",
+    "payslips": "Payslips",
+    "profile": "Profile"
+  },
+  "employees": {
+    "add": "Add Employee",
+    "edit": "Edit Employee",
+    "search": "Search by name or email...",
+    "empty": "No employees found",
+    "notFound": "Employee not found",
+    "loadFailed": "Couldn't load employees",
+    "created": "Employee created successfully",
+    "updated": "Employee updated successfully",
+    "deleted": "Employee deleted successfully",
+    "saveFailed": "Couldn't save the employee",
+    "deleteFailed": "Couldn't delete the employee",
+    "columns": {
+      "employee": "Employee",
+      "job": "Job Title",
+      "age": "Age",
+      "hireDate": "Hire Date",
+      "role": "Role",
+      "salary": "Salary"
+    },
+    "role": {
+      "admin": "Admin",
+      "employee": "Employee"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "delete": {
+      "title": "Delete this employee?",
+      "description": "{name} will be permanently removed."
+    },
+    "form": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "password": "Password",
+      "passwordHint": "Leave empty to keep the current password",
+      "job": "Job Title",
+      "age": "Age",
+      "hireDate": "Hire Date",
+      "isAdmin": "Admin access",
+      "save": "Save",
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "salary": "Salary"
+    },
+    "errors": {
+      "nameMin": "Name must be at least 2 characters",
+      "passwordMin": "Password must be at least 6 characters",
+      "jobRequired": "Please enter a job title",
+      "ageInvalid": "Please enter a valid age",
+      "emailExists": "This email is already in use",
+      "salaryInvalid": "Please enter a valid salary"
+    }
+  },
+  "profile": {
+    "edit": "Edit Profile",
+    "updated": "Profile updated successfully",
+    "saveFailed": "Couldn't update your profile"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "language": {
+    "toggle": "Change language",
+    "en": "English",
+    "ar": "العربية"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "description": "An unexpected error occurred. You can try again or go back home.",
+    "retry": "Try again",
+    "home": "Go home"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for doesn't exist.",
+    "home": "Back home"
+  },
+  "auth": {
+    "logout": "Log out",
+    "logoutFailed": "Failed to log out",
+    "title": "Login first to your account",
+    "email": "Email Address",
+    "emailPlaceholder": "you@company.com",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "showPassword": "Show password",
+    "login": "Login",
+    "emailRequired": "Please enter your email address",
+    "emailInvalid": "Please enter a valid email address",
+    "passwordRequired": "Please enter your password",
+    "heroTitle": "Amazing Platform!",
+    "heroQuote": "\"The human resource platform helped streamline our hiring process and saved us a significant amount of time and effort.\"",
+    "rights": "All rights reserved.",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy",
+    "loading": "Loading...",
+    "hidePassword": "Hide password",
+    "invalidCredentials": "Invalid email or password"
+  },
+  "requests": {
+    "add": "New Request",
+    "edit": "Edit Request",
+    "empty": "You have no requests yet",
+    "notFound": "Request not found",
+    "locked": "This request is no longer pending, so it can't be changed",
+    "loadFailed": "Couldn't load your requests",
+    "created": "Request created successfully",
+    "updated": "Request updated successfully",
+    "deleted": "Request deleted successfully",
+    "saveFailed": "Couldn't save the request",
+    "deleteFailed": "Couldn't delete the request",
+    "statusUpdated": "Request status updated",
+    "admin": {
+      "empty": "No requests yet",
+      "loadFailed": "Couldn't load requests",
+      "actionFailed": "Couldn't update the request"
+    },
+    "columns": {
+      "employee": "Employee",
+      "type": "Type",
+      "date": "Date",
+      "time": "Time",
+      "note": "Note",
+      "status": "Status"
+    },
+    "type": {
+      "LEAVE": "Leave",
+      "PERMISSION": "Permission",
+      "MISSION": "Mission",
+      "ADVANCE": "Advance"
+    },
+    "status": {
+      "PENDING": "Pending",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected"
+    },
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete",
+      "approve": "Approve",
+      "reject": "Reject",
+      "viewNote": "View note"
+    },
+    "delete": {
+      "title": "Delete this request?",
+      "description": "This request will be permanently removed."
+    },
+    "form": {
+      "type": "Request Type",
+      "date": "Date",
+      "fromTime": "From",
+      "toTime": "To",
+      "note": "Note",
+      "save": "Save",
+      "saving": "Saving...",
+      "cancel": "Cancel"
+    },
+    "errors": {
+      "typeInvalid": "Please choose a valid request type",
+      "noteRequired": "Please enter a note",
+      "dateInvalid": "Please enter a valid date",
+      "timeInvalid": "Please enter a valid time",
+      "timeRange": "End time must be after start time",
+      "statusInvalid": "Please choose a valid request status"
+    }
+  },
+  "attendance": {
+    "today": "Today",
+    "checkIn": "Check In",
+    "checkOut": "Check Out",
+    "checkedIn": "Checked in successfully",
+    "checkedOut": "Checked out successfully",
+    "alreadyCheckedIn": "You have already checked in today",
+    "alreadyCheckedOut": "You have already checked out today",
+    "checkInFirst": "You need to check in first",
+    "actionFailed": "Something went wrong, please try again",
+    "month": "Month",
+    "search": "Search",
+    "empty": "No attendance records for this month",
+    "loadFailed": "Couldn't load attendance",
+    "duration": "{hours}h {minutes}m",
+    "columns": {
+      "employee": "Employee",
+      "day": "Day",
+      "checkIn": "Check In",
+      "checkOut": "Check Out",
+      "hours": "Hours",
+      "status": "Status"
+    },
+    "status": {
+      "PRESENT": "Present",
+      "LEAVE": "Leave",
+      "MISSION": "Mission"
+    }
+  },
+  "payroll": {
+    "employee": "Employee",
+    "selectEmployee": "Select an employee",
+    "month": "Month",
+    "search": "Search",
+    "attendance": "Attendance",
+    "request": "Request",
+    "attendanceDays": "{count} days",
+    "noAttendance": "No attendance this month",
+    "salary": "Salary",
+    "basicSalary": "Basic salary",
+    "bonuses": "Bonuses",
+    "deductions": "Deductions",
+    "netSalary": "Net salary",
+    "isPaid": "Paid",
+    "isPublished": "Show to employee",
+    "save": "Save",
+    "saved": "Payroll saved successfully",
+    "saveFailed": "Couldn't save the payroll",
+    "loadFailed": "Couldn't load the data",
+    "employeeNotFound": "Employee not found",
+    "errors": {
+      "employeeRequired": "Please choose an employee",
+      "amountInvalid": "Please enter a valid amount"
+    }
+  },
+  "payslips": {
+    "notAvailable": "No payslip is available for this month yet",
+    "loadFailed": "Couldn't load the payslip",
+    "month": "Month",
+    "search": "Search",
+    "period": "Pay period",
+    "netSalary": "Net salary",
+    "basicSalary": "Basic salary",
+    "bonuses": "Bonuses",
+    "deductions": "Deductions",
+    "breakdown": "Salary breakdown",
+    "paid": "Paid",
+    "unpaid": "Awaiting payment"
+  },
+  "common": {
+    "page": "Page {page} of {totalPages}",
+    "total": "Total: {total}",
+    "rowsPerPage": "Rows per page",
+    "previous": "Previous",
+    "next": "Next",
+    "errors": {
+      "monthInvalid": "Please choose a valid month",
+      "yearInvalid": "Please choose a valid year"
+    }
+  }
+}

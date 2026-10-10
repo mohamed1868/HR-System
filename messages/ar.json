@@ -1,0 +1,264 @@
+{
+  "app": {
+    "name": "نظام الموارد البشرية"
+  },
+  "nav": {
+    "collapse": "طي القائمة",
+    "dashboard": "لوحة التحكم",
+    "employees": "الموظفين",
+    "attendance": "الحضور",
+    "payroll": "الرواتب",
+    "requests": "الطلبات",
+    "payslips": "كشوف الرواتب",
+    "profile": "الملف الشخصي"
+  },
+  "employees": {
+    "add": "إضافة موظف",
+    "edit": "تعديل الموظف",
+    "search": "ابحث بالاسم أو البريد...",
+    "empty": "لا يوجد موظفين",
+    "notFound": "الموظف غير موجود",
+    "loadFailed": "تعذّر تحميل الموظفين",
+    "created": "تم إنشاء الموظف بنجاح",
+    "updated": "تم تحديث بيانات الموظف بنجاح",
+    "deleted": "تم حذف الموظف بنجاح",
+    "saveFailed": "تعذّر حفظ الموظف",
+    "deleteFailed": "تعذّر حذف الموظف",
+    "columns": {
+      "employee": "الموظف",
+      "job": "الوظيفة",
+      "age": "العمر",
+      "hireDate": "تاريخ التعيين",
+      "role": "الصلاحية",
+      "salary": "الراتب"
+    },
+    "role": {
+      "admin": "مدير",
+      "employee": "موظف"
+    },
+    "actions": {
+      "edit": "تعديل",
+      "delete": "حذف"
+    },
+    "delete": {
+      "title": "حذف هذا الموظف؟",
+      "description": "سيتم حذف {name} نهائيًا."
+    },
+    "form": {
+      "name": "الاسم الكامل",
+      "email": "البريد الإلكتروني",
+      "password": "كلمة المرور",
+      "passwordHint": "اتركها فارغة للإبقاء على كلمة المرور الحالية",
+      "job": "الوظيفة",
+      "age": "العمر",
+      "hireDate": "تاريخ التعيين",
+      "isAdmin": "صلاحية مدير",
+      "save": "حفظ",
+      "saving": "جارٍ الحفظ...",
+      "cancel": "إلغاء",
+      "salary": "الراتب"
+    },
+    "errors": {
+      "nameMin": "يجب ألا يقل الاسم عن حرفين",
+      "passwordMin": "يجب ألا تقل كلمة المرور عن 6 أحرف",
+      "jobRequired": "من فضلك أدخل الوظيفة",
+      "ageInvalid": "من فضلك أدخل عمرًا صحيحًا",
+      "emailExists": "هذا البريد الإلكتروني مستخدم بالفعل",
+      "salaryInvalid": "من فضلك أدخل راتبًا صحيحًا"
+    }
+  },
+  "profile": {
+    "edit": "تعديل الملف الشخصي",
+    "updated": "تم تحديث الملف الشخصي بنجاح",
+    "saveFailed": "تعذّر تحديث الملف الشخصي"
+  },
+  "theme": {
+    "light": "فاتح",
+    "dark": "داكن"
+  },
+  "language": {
+    "toggle": "تغيير اللغة",
+    "en": "English",
+    "ar": "العربية"
+  },
+  "error": {
+    "title": "حدث خطأ ما",
+    "description": "حدث خطأ غير متوقع. يمكنك المحاولة مرة أخرى أو العودة للرئيسية.",
+    "retry": "حاول مرة أخرى",
+    "home": "الرئيسية"
+  },
+  "notFound": {
+    "title": "الصفحة غير موجودة",
+    "description": "الصفحة التي تبحث عنها غير موجودة.",
+    "home": "العودة للرئيسية"
+  },
+  "auth": {
+    "logout": "تسجيل الخروج",
+    "logoutFailed": "فشل تسجيل الخروج",
+    "title": "سجّل الدخول إلى حسابك",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "you@company.com",
+    "password": "كلمة المرور",
+    "passwordPlaceholder": "أدخل كلمة المرور",
+    "showPassword": "إظهار كلمة المرور",
+    "login": "تسجيل الدخول",
+    "emailRequired": "من فضلك أدخل البريد الإلكتروني",
+    "emailInvalid": "من فضلك أدخل بريدًا إلكترونيًا صحيحًا",
+    "passwordRequired": "من فضلك أدخل كلمة المرور",
+    "heroTitle": "منصة رائعة!",
+    "heroQuote": "\"ساعدتنا منصة الموارد البشرية في تبسيط عملية التوظيف ووفرت علينا الكثير من الوقت والجهد.\"",
+    "rights": "جميع الحقوق محفوظة.",
+    "terms": "الشروط والأحكام",
+    "privacy": "سياسة الخصوصية",
+    "loading":"تحميل...",
+    "hidePassword": "إخفاء كلمة المرور",
+    "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة"
+  },
+  "requests": {
+    "add": "طلب جديد",
+    "edit": "تعديل الطلب",
+    "empty": "لا توجد لديك طلبات بعد",
+    "notFound": "الطلب غير موجود",
+    "locked": "لم يعد هذا الطلب قيد الانتظار، لذلك لا يمكن تعديله",
+    "loadFailed": "تعذر تحميل طلباتك",
+    "created": "تم إنشاء الطلب بنجاح",
+    "updated": "تم تحديث الطلب بنجاح",
+    "deleted": "تم حذف الطلب بنجاح",
+    "saveFailed": "تعذر حفظ الطلب",
+    "deleteFailed": "تعذر حذف الطلب",
+    "statusUpdated": "تم تحديث حالة الطلب",
+    "admin": {
+      "empty": "لا توجد طلبات بعد",
+      "loadFailed": "تعذر تحميل الطلبات",
+      "actionFailed": "تعذر تحديث الطلب"
+    },
+    "columns": {
+      "employee": "الموظف",
+      "type": "النوع",
+      "date": "التاريخ",
+      "time": "الوقت",
+      "note": "ملاحظة",
+      "status": "الحالة"
+    },
+    "type": {
+      "LEAVE": "إجازة",
+      "PERMISSION": "إذن",
+      "MISSION": "مأمورية",
+      "ADVANCE": "سلفة"
+    },
+    "status": {
+      "PENDING": "قيد الانتظار",
+      "APPROVED": "مقبول",
+      "REJECTED": "مرفوض"
+    },
+    "actions": {
+      "edit": "تعديل",
+      "delete": "حذف",
+      "approve": "قبول",
+      "reject": "رفض",
+      "viewNote": "عرض الملاحظة"
+    },
+    "delete": {
+      "title": "حذف هذا الطلب؟",
+      "description": "سيتم حذف هذا الطلب نهائيًا."
+    },
+    "form": {
+      "type": "نوع الطلب",
+      "date": "التاريخ",
+      "fromTime": "من",
+      "toTime": "إلى",
+      "note": "ملاحظة",
+      "save": "حفظ",
+      "saving": "جارٍ الحفظ...",
+      "cancel": "إلغاء"
+    },
+    "errors": {
+      "typeInvalid": "من فضلك اختر نوع طلب صحيح",
+      "noteRequired": "من فضلك أدخل ملاحظة",
+      "dateInvalid": "من فضلك أدخل تاريخًا صحيحًا",
+      "timeInvalid": "من فضلك أدخل وقتًا صحيحًا",
+      "timeRange": "يجب أن يكون وقت النهاية بعد وقت البداية",
+      "statusInvalid": "من فضلك اختر حالة طلب صحيحة"
+    }
+  },
+  "attendance": {
+    "today": "اليوم",
+    "checkIn": "تسجيل الحضور",
+    "checkOut": "تسجيل الانصراف",
+    "checkedIn": "تم تسجيل الحضور بنجاح",
+    "checkedOut": "تم تسجيل الانصراف بنجاح",
+    "alreadyCheckedIn": "لقد سجلت حضورك اليوم بالفعل",
+    "alreadyCheckedOut": "لقد سجلت انصرافك اليوم بالفعل",
+    "checkInFirst": "يجب تسجيل الحضور أولًا",
+    "actionFailed": "حدث خطأ، حاول مرة أخرى",
+    "month": "الشهر",
+    "search": "بحث",
+    "empty": "لا توجد سجلات حضور لهذا الشهر",
+    "loadFailed": "تعذر تحميل الحضور",
+    "duration": "{hours} س {minutes} د",
+    "columns": {
+      "employee": "الموظف",
+      "day": "اليوم",
+      "checkIn": "الحضور",
+      "checkOut": "الانصراف",
+      "hours": "الساعات",
+      "status": "الحالة"
+    },
+    "status": {
+      "PRESENT": "حاضر",
+      "LEAVE": "إجازة",
+      "MISSION": "مأمورية"
+    }
+  },
+  "payroll": {
+    "employee": "الموظف",
+    "selectEmployee": "اختر موظفًا",
+    "month": "الشهر",
+    "search": "بحث",
+    "attendance": "الحضور",
+    "request": "الطلب",
+    "attendanceDays": "{count} يوم",
+    "noAttendance": "لا يوجد حضور في هذا الشهر",
+    "salary": "المرتب",
+    "basicSalary": "المرتب الأساسي",
+    "bonuses": "المكافآت",
+    "deductions": "الخصومات",
+    "netSalary": "صافي المرتب",
+    "isPaid": "تم الدفع",
+    "isPublished": "إظهار للموظف",
+    "save": "حفظ",
+    "saved": "تم حفظ المرتب بنجاح",
+    "saveFailed": "تعذر حفظ المرتب",
+    "loadFailed": "تعذر تحميل البيانات",
+    "employeeNotFound": "الموظف غير موجود",
+    "errors": {
+      "employeeRequired": "من فضلك اختر موظفًا",
+      "amountInvalid": "من فضلك أدخل مبلغًا صحيحًا"
+    }
+  },
+  "payslips": {
+    "notAvailable": "لا يوجد كشف مرتب متاح لهذا الشهر بعد",
+    "loadFailed": "تعذر تحميل كشف المرتب",
+    "month": "الشهر",
+    "search": "بحث",
+    "period": "فترة المرتب",
+    "netSalary": "صافي المرتب",
+    "basicSalary": "المرتب الأساسي",
+    "bonuses": "المكافآت",
+    "deductions": "الخصومات",
+    "breakdown": "تفاصيل المرتب",
+    "paid": "تم الدفع",
+    "unpaid": "في انتظار الدفع"
+  },
+  "common": {
+    "page": "صفحة {page} من {totalPages}",
+    "total": "الإجمالي: {total}",
+    "rowsPerPage": "عدد الصفوف",
+    "previous": "السابق",
+    "next": "التالي",
+    "errors": {
+      "monthInvalid": "من فضلك اختر شهرًا صحيحًا",
+      "yearInvalid": "من فضلك اختر سنة صحيحة"
+    }
+  }
+}

@@ -1,7 +1,13 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  redirects() {
+    return [
+      { source: "/admin", destination: "/admin/dashboard", permanent: false },
+      { source: "/user", destination: "/user/dashboard", permanent: false },
+    ];
+  },
 };
 
-export default nextConfig;
+export default createNextIntlPlugin()(nextConfig);

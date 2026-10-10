@@ -1,0 +1,188 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { Pencil, StickyNote, Trash2 } from "lucide-react";
+import { useFormatter, useTranslations } from "next-intl";
+import { toast } from "sonner";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { RequestStatusBadge } from "@/components/shared/request-status-badge";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { TablePagination } from "@/components/shared/table-pagination";
+import { axiosInstance } from "@/lib/axios";
+import { PAGE_SIZE } from "@/lib/pagination";
+import { RequestStatus } from "@/lib/generated/prisma/enums";
+import type { TRequestData } from "@/lib/types";
+import { cn } from "@/lib/utils";
+
+export const RequestsList = () => {
+  const t = useTranslations();
+  const format = useFormatter();
+  const [requests, setRequests] = useState<TRequestData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [note, setNote] = useState<string | null>(null);
+  const [toDelete, setToDelete] = useState<TRequestData | null>(null);
+  const [deleting, setDeleting] = useState(false);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(PAGE_SIZE);
+  const [total, setTotal] = useState(0);
+  const [refresh, setRefresh] = useState(0);
+
+  useEffect(() => {
+    const getRequests = async () => {
+      try {
+        const res = (await axiosInstance.get("user/requests", { params: { page, limit } })) as {
+          data: TRequestData[];
+          total: number;
+        };
+        setRequests(res.data);
+        setTotal(res.total);
+      } catch {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getRequests();
+  }, [page, limit, refresh]);
+
+  const onDelete = async () => {
+    if (!toDelete) return;
+    setDeleting(true);
+    try {
+      await axiosInstance.delete(`user/requests/${toDelete.id}`);
+      toast.success(t("requests.deleted"));
+      setToDelete(null);
+      setPage(1);
+      setRefresh(refresh + 1);
+    } catch {
+      toast.error(t("requests.deleteFailed"));
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  const formatTime = (value: Date | string | null) =>
+    value ? format.dateTime(new Date(value), { timeStyle: "short" }) : null;
+
+  return (
+    <Card className="gap-0 py-0">
+      {loading || requests.length === 0 ? (
+        <p className="p-10 text-center text-sm text-muted-foreground">
+          {loading ? t("auth.loading") : error ? t("requests.loadFailed") : t("requests.empty")}
+        </p>
+      ) : (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="ps-4">{t("requests.columns.type")}</TableHead>
+              <TableHead>{t("requests.columns.date")}</TableHead>
+              <TableHead>{t("requests.columns.time")}</TableHead>
+              <TableHead>{t("requests.columns.note")}</TableHead>
+              <TableHead>{t("requests.columns.status")}</TableHead>
+              <TableHead />
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {requests.map((request) => {
+              const isPending = request.status === RequestStatus.PENDING;
+              const fromTime = formatTime(request.fromTime);
+              const toTime = formatTime(request.toTime);
+              return (
+                <TableRow key={request.id}>
+                  <TableCell className="ps-4 font-medium">{t(`requests.type.${request.type}`)}</TableCell>
+                  <TableCell>
+                    {format.dateTime(new Date(request.date), { dateStyle: "medium", timeZone: "UTC" })}
+                  </TableCell>
+                  <TableCell>{fromTime || toTime ? `${fromTime ?? "—"} - ${toTime ?? "—"}` : "—"}</TableCell>
+                  <TableCell>
+                    <Button
+                      variant="ghost"
+                      size="icon-sm"
+                      aria-label={t("requests.actions.viewNote")}
+                      title={t("requests.actions.viewNote")}
+                      onClick={() => setNote(request.note)}
+                    >
+                      <StickyNote />
+                    </Button>
+                  </TableCell>
+                  <TableCell>
+                    <RequestStatusBadge status={request.status} />
+                  </TableCell>
+                  <TableCell className="pe-4 text-end">
+                    <Link
+                      href={`/user/requests/${request.id}`}
+                      aria-label={t("requests.actions.edit")}
+                      aria-disabled={!isPending}
+                      tabIndex={isPending ? undefined : -1}
+                      className={cn(
+                        buttonVariants({ variant: "ghost", size: "icon-sm" }),
+                        !isPending && "pointer-events-none opacity-50",
+                      )}
+                    >
+                      <Pencil />
+                    </Link>
+                    <Button
+                      variant="ghost"
+                      size="icon-sm"
+                      aria-label={t("requests.actions.delete")}
+                      className="text-destructive"
+                      disabled={!isPending}
+                      onClick={() => setToDelete(request)}
+                    >
+                      <Trash2 />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      )}
+
+      <TablePagination page={page} limit={limit} total={total} onPageChange={setPage} onLimitChange={setLimit} />
+
+      <Dialog open={note !== null} onOpenChange={(open) => !open && setNote(null)}>
+        <DialogContent>
+          <p className="pe-8 text-sm leading-relaxed break-words whitespace-pre-wrap">{note}</p>
+        </DialogContent>
+      </Dialog>
+
+      <AlertDialog open={!!toDelete} onOpenChange={(open) => !open && !deleting && setToDelete(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t("requests.delete.title")}</AlertDialogTitle>
+            <AlertDialogDescription>{t("requests.delete.description")}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={deleting}>{t("requests.form.cancel")}</AlertDialogCancel>
+            <AlertDialogAction variant="destructive" onClick={onDelete} disabled={deleting}>
+              {t("requests.actions.delete")}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </Card>
+  );
+};
