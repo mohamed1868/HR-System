@@ -51,6 +51,7 @@ export const RequestsList = () => {
 
   useEffect(() => {
     const getRequests = async () => {
+      setLoading(true);
       try {
         const res = (await axiosInstance.get("user/requests", { params: { page, limit } })) as {
           data: TRequestData[];
@@ -161,7 +162,14 @@ export const RequestsList = () => {
         </Table>
       )}
 
-      <TablePagination page={page} limit={limit} total={total} onPageChange={setPage} onLimitChange={setLimit} />
+      <TablePagination
+        page={page}
+        limit={limit}
+        total={total}
+        onPageChange={setPage}
+        onLimitChange={setLimit}
+        loading={loading}
+      />
 
       <Dialog open={note !== null} onOpenChange={(open) => !open && setNote(null)}>
         <DialogContent>

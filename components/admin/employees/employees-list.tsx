@@ -48,28 +48,31 @@ export const EmployeesList = () => {
   const [toDelete, setToDelete] = useState<TUserData | null>(null);
   const [deleting, setDeleting] = useState(false);
 
-  useEffect(() => {
-    const getEmployees = async () => {
-      try {
-        if (search) {
-          const res = await axiosInstance.get("admin/employee/search", { params: { search } });
-          setEmployees(res.data);
-          setTotal(res.data.length);
-        } else {
-          const res = (await axiosInstance.get("admin/employee", { params: { page, limit } })) as {
-            data: TUserData[];
-            total: number;
-          };
-          setEmployees(res.data);
-          setTotal(res.total);
-        }
-      } catch {
-        setError(true);
-      } finally {
-        setLoading(false);
+  const getEmployees = async () => {
+    setLoading(true);
+    try {
+      if (search) {
+        const res = await axiosInstance.get("admin/employee/search", { params: { search } });
+        setEmployees(res.data);
+        setTotal(res.data.length);
+      } else {
+        const res = (await axiosInstance.get("admin/employee", { params: { page, limit } })) as {
+          data: TUserData[];
+          total: number;
+        };
+        setEmployees(res.data);
+        setTotal(res.total);
       }
-    };
-    getEmployees();
+    } catch {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(getEmployees, search ? 300 : 0);
+    return () => clearTimeout(timer);
   }, [page, limit, search, refresh]);
 
   const onDelete = async () => {
@@ -183,7 +186,14 @@ export const EmployeesList = () => {
         </Table>
       )}
 
-      <TablePagination page={page} limit={limit} total={total} onPageChange={setPage} onLimitChange={setLimit} />
+      <TablePagination
+        page={page}
+        limit={limit}
+        total={total}
+        onPageChange={setPage}
+        onLimitChange={setLimit}
+        loading={loading}
+      />
 
       <AlertDialog open={!!toDelete} onOpenChange={(open) => !open && !deleting && setToDelete(null)}>
         <AlertDialogContent>

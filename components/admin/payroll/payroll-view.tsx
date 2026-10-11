@@ -37,6 +37,7 @@ export const PayrollView = () => {
   const [errors, setErrors] = useState<Record<string, string[] | undefined>>({});
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(PAGE_SIZE);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getEmployees = async () => {
@@ -51,12 +52,15 @@ export const PayrollView = () => {
   }, [t]);
 
   const getPayroll = async (userId: string | number, year: string | number, month: string | number) => {
+    setLoading(true);
     try {
       const res = await axiosInstance.get("admin/payroll", { params: { userId, year, month } });
       setData(res.data);
       setErrors({});
     } catch {
       toast.error(t("payroll.loadFailed"));
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -95,13 +99,16 @@ export const PayrollView = () => {
       return;
     }
     setErrors({});
+    setLoading(true);
 
     try {
       await axiosInstance.put("admin/payroll", result.data);
       toast.success(t("payroll.saved"));
-      getPayroll(data.employee.id, data.year, data.month);
+      await getPayroll(data.employee.id, data.year, data.month);
     } catch {
       toast.error(t("payroll.saveFailed"));
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -149,7 +156,7 @@ export const PayrollView = () => {
             onChange={(event) => setMonth(event.target.value)}
             className="h-10 w-auto rounded-xl dark:scheme-dark"
           />
-          <Button type="submit" className="h-10 rounded-xl px-4">
+          <Button type="submit" className="h-10 rounded-xl px-4" disabled={loading}>
             <Search />
             {t("payroll.search")}
           </Button>
@@ -284,7 +291,9 @@ export const PayrollView = () => {
                       {payroll ? format.number(payroll.netSalary) : "—"}
                     </span>
                   </p>
-                  <Button type="submit">{t("payroll.save")}</Button>
+                  <Button type="submit" disabled={loading}>
+                    {t("payroll.save")}
+                  </Button>
                 </div>
               </form>
             </CardContent>

@@ -39,6 +39,7 @@ export const AdminRequestsList = () => {
   const [requests, setRequests] = useState<TAdminRequestData[]>([]);
   const [note, setNote] = useState<string | null>(null);
   const [toDelete, setToDelete] = useState<TAdminRequestData | null>(null);
+  const [loading, setLoading] = useState(false);
   const [refresh, setRefresh] = useState(0);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(PAGE_SIZE);
@@ -46,6 +47,7 @@ export const AdminRequestsList = () => {
 
   useEffect(() => {
     const getRequests = async () => {
+      setLoading(true);
       try {
         const res = (await axiosInstance.get("admin/requests", { params: { page, limit } })) as {
           data: TAdminRequestData[];
@@ -55,23 +57,29 @@ export const AdminRequestsList = () => {
         setTotal(res.total);
       } catch {
         toast.error(t("requests.admin.loadFailed"));
+      } finally {
+        setLoading(false);
       }
     };
     getRequests();
   }, [page, limit, refresh, t]);
 
   const onStatusChange = async (id: number, status: RequestStatus) => {
+    setLoading(true);
     try {
       await axiosInstance.patch(`admin/requests/${id}`, { status });
       toast.success(t("requests.statusUpdated"));
       setRefresh(refresh + 1);
     } catch {
       toast.error(t("requests.admin.actionFailed"));
+    } finally {
+      setLoading(false);
     }
   };
 
   const onDelete = async () => {
     if (!toDelete) return;
+    setLoading(true);
     try {
       await axiosInstance.delete(`admin/requests/${toDelete.id}`);
       toast.success(t("requests.deleted"));
@@ -80,6 +88,8 @@ export const AdminRequestsList = () => {
       setPage(1);
     } catch {
       toast.error(t("requests.deleteFailed"));
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -132,7 +142,7 @@ export const AdminRequestsList = () => {
                     variant="ghost"
                     size="icon-sm"
                     className="text-emerald-600"
-                    disabled={request.status === RequestStatus.APPROVED}
+                    disabled={loading || request.status === RequestStatus.APPROVED}
                     onClick={() => onStatusChange(request.id, RequestStatus.APPROVED)}
                   >
                     <Check />
@@ -141,7 +151,7 @@ export const AdminRequestsList = () => {
                     variant="ghost"
                     size="icon-sm"
                     className="text-destructive"
-                    disabled={request.status === RequestStatus.REJECTED}
+                    disabled={loading || request.status === RequestStatus.REJECTED}
                     onClick={() => onStatusChange(request.id, RequestStatus.REJECTED)}
                   >
                     <X />
@@ -156,7 +166,14 @@ export const AdminRequestsList = () => {
         </Table>
       )}
 
-      <TablePagination page={page} limit={limit} total={total} onPageChange={setPage} onLimitChange={setLimit} />
+      <TablePagination
+        page={page}
+        limit={limit}
+        total={total}
+        onPageChange={setPage}
+        onLimitChange={setLimit}
+        loading={loading}
+      />
 
       <Dialog open={note !== null} onOpenChange={() => setNote(null)}>
         <DialogContent>
@@ -164,15 +181,15 @@ export const AdminRequestsList = () => {
         </DialogContent>
       </Dialog>
 
-      <AlertDialog open={toDelete !== null} onOpenChange={() => setToDelete(null)}>
+      <AlertDialog open={toDelete !== null} onOpenChange={(open) => !open && !loading && setToDelete(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>{t("requests.delete.title")}</AlertDialogTitle>
             <AlertDialogDescription>{t("requests.delete.description")}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>{t("requests.form.cancel")}</AlertDialogCancel>
-            <AlertDialogAction variant="destructive" onClick={onDelete}>
+            <AlertDialogCancel disabled={loading}>{t("requests.form.cancel")}</AlertDialogCancel>
+            <AlertDialogAction variant="destructive" onClick={onDelete} disabled={loading}>
               {t("requests.actions.delete")}
             </AlertDialogAction>
           </AlertDialogFooter>
