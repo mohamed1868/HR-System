@@ -91,7 +91,7 @@ export const AttendanceList = () => {
               className="h-10 w-auto rounded-xl dark:scheme-dark"
             />
           </div>
-          <Button type="submit" className="h-10 rounded-xl px-4">
+          <Button type="submit" className="h-10 rounded-xl px-4" disabled={loading}>
             <Search />
             {t("attendance.search")}
           </Button>
